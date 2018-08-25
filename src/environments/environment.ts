@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  site: 'http://library.gifkaro.com/gift/v1/',
+  getCategoryUrl: 'categories/',
+  defaultCategory: 'trend',
+  sizeOfChunk: 20
 };
 
 /*

@@ -10,8 +10,8 @@
     <div class="container">
       <div class="menux">
         <ul class="menu flex">
-          <li ng-init="loadMenu()" ng-repeat="categories in categoryList">
-            <a href="/search/{{categories.replace(' ','-')}}/">{{categories}}</a>
+          <li #categoryItems *ngFor="let category of categories">
+            <a href="/search/{{category.replace(' ','-')}}/">{{category}}</a>
           </li>
         </ul>
         <div class="clearfix"> </div>
@@ -20,17 +20,27 @@
     <!--// nav-->
   </div>
 </div>
-<div class="container contents" data-ng-controller="homeCtrl as vm" ng-cloak="" layout="column" layout-fill>
+<div class="container contents" layout="column" layout-fill>
   <div class="headerTitle">
       <h3>Trending Now</h3>
   </div>
   <div id="content-scroller">
       <div>
-          <!--loading--> 
-          <div class="loading loading-more-indicator" ng-show="vm.loadingMore">
-              <div class="lds-ripple"><span></span><span></span><span></span></div>
+        <div class="cards-wrap">
+          <div class="card cardx" *ngFor="let data of dataList" >
+           <a class="img" href="/gifs/{{data.giftuid}}" [style.background-image]="getSanitizedGifUrl(data)" 
+              [style.min-height]="getGifMinHeight(data)"></a> 
+            <div class="inside">
+              <h3>{{data.category}} </h3>
+              <div class="description">{{data.group}} </div>
+            </div>
           </div>
-          <!--// loading--> 
+        </div>
+        <!--loading--> 
+        <div class="loading loading-more-indicator" *ngIf="showLoader">
+            <div class="lds-ripple"><span></span><span></span><span></span></div>
+        </div>
+        <!--// loading--> 
       </div>
     </div>
 </div>
