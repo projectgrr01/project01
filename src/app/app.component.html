@@ -20,22 +20,23 @@
     <!--// nav-->
   </div>
 </div>
-<div class="container contents" layout="column" layout-fill>
+<div class="container contents" layout="column">
   <div class="headerTitle">
       <h3>Trending Now</h3>
   </div>
   <div id="content-scroller">
       <div>
-        <div class="cards-wrap">
-          <div class="card cardx" *ngFor="let data of dataList" >
+        <div id="columns" class="cards-wrap">
+          <div class="card cardx" *ngFor="let data of dataList" [style.height]="getGifMinHeight(data)">
            <a class="img" href="/gifs/{{data.giftuid}}" [style.background-image]="getSanitizedGifUrl(data)" 
-              [style.min-height]="getGifMinHeight(data)"></a> 
+            [style.height]="getGifMinHeight(data)"></a> 
             <div class="inside">
               <h3>{{data.category}} </h3>
               <div class="description">{{data.group}} </div>
             </div>
           </div>
         </div>
+
         <!--loading--> 
         <div class="loading loading-more-indicator" *ngIf="showLoader">
             <div class="lds-ripple"><span></span><span></span><span></span></div>
