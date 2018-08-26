@@ -17,7 +17,7 @@ export class networkService {
             .pipe(map(data => data.json()));
     }
 
-    public getDefaultData(pageNumber: number): Observable<any> {
+    public getTrendingData(pageNumber: number): Observable<any> {
         let reqParams = new URLSearchParams();
         reqParams.set('page', pageNumber.toString());
         reqParams.set('size', environment.sizeOfChunk.toString());

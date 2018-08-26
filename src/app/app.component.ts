@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer } from '@angular/core';
 import { networkService } from './commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { concat } from 'rxjs/operators';
 //import 'rxjs/add/observable/fromEvent'
 
 interface Window { MyNamespace: any; }
@@ -21,10 +22,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('categoryItems') categoryItems: QueryList<any>;
 
-  //Convert these anonymous arrays into class arrays
+  // Convert these anonymous arrays into class arrays
   categories: any[] = [];
   dataList: any[] = [];
-  showLoader: boolean = true;
+  showLoader = true;
+  currentPage = 0;
 
   constructor (private network: networkService,
               private sanitization: DomSanitizer) {
@@ -35,16 +37,28 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.categories = response.categories;
     });
 
-    this.network.getDefaultData(0).subscribe(response => {
-      window.test = response;
-      this.dataList = response.content;
-      this.showLoader = false;
-    })
+    this.currentPage = 0;
+    this.dataList = [];
+    this.populateGridData();
   }
 
   ngAfterViewInit() {
     this.categoryItems.changes.subscribe(t => {
       this.categoryItemsRendred();
+    });
+  }
+
+  private onScroll(): void {
+    this.populateGridData();
+  }
+
+  private populateGridData() {
+    this.showLoader = true;
+    this.network.getTrendingData(this.currentPage).subscribe(response => {
+      this.currentPage++;
+      this.dataList = this.dataList.concat(response.content);
+      window.test = this.dataList;
+      this.showLoader = false;
     });
   }
 
