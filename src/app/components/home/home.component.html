@@ -1,0 +1,24 @@
+<div class="container contents" layout="column">
+  <div class="headerTitle">
+    <h3>Trending Now</h3>
+  </div>
+  <div id="content-scroller">
+    <div>
+      <div id="columns" class="cards-wrap" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+        <div class="card cardx" *ngFor="let data of dataList" [style.height]="getGifMinHeight(data)">
+          <a class="img" href="/gifs/{{data.giftuid}}" [style.background-image]="getSanitizedGifUrl(data)" [style.height]="getGifMinHeight(data)"></a>
+          <div class="inside">
+            <h3>{{data.category}} </h3>
+            <div class="description">{{data.group}} </div>
+          </div>
+        </div>
+      </div>
+
+      <!--loading-->
+      <div class="loading loading-more-indicator" *ngIf="showLoader">
+        <div class="lds-ripple"><span></span><span></span><span></span></div>
+      </div>
+      <!--// loading-->
+    </div>
+  </div>
+</div>

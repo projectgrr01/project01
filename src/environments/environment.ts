@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   site: 'http://library.gifkaro.com/gift/v1/',
-  getCategoryUrl: 'categories/',
   defaultCategory: 'trend',
   sizeOfChunk: 20
 };

@@ -4,6 +4,11 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+const subUrls: any = {
+    CATEGORYURL: 'categories/',
+    GROUPS: '/groups'
+}
+
 @Injectable()
 export class networkService {
     private baseSiteUrl;
@@ -13,7 +18,7 @@ export class networkService {
      }
 
     public getMenuCategories(): Observable<any> {
-        return this.http.get(this.baseSiteUrl + environment.getCategoryUrl)
+        return this.http.get(this.baseSiteUrl + subUrls.CATEGORYURL)
             .pipe(map(data => data.json()));
     }
 
@@ -23,6 +28,11 @@ export class networkService {
         reqParams.set('size', environment.sizeOfChunk.toString());
         let options = new RequestOptions({ params: reqParams.toString() });
         return this.http.get(this.baseSiteUrl + environment.defaultCategory, options)
+            .pipe(map(data => data.json()));
+    }
+
+    public getCategoryGroupsData(category: String): Observable<any> {
+        return this.http.get(this.baseSiteUrl + category + subUrls.GROUPS)
             .pipe(map(data => data.json()));
     }
 }

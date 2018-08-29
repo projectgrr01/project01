@@ -5,17 +5,27 @@ import { AppComponent } from './app.component';
 import { networkService } from './commons/services/network-service';
 import { HttpModule } from '@angular/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { routing } from './app.routes';
+import { SearchComponent } from './components/search/search.component';
+import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
+import { AppPageComponent } from './components/fullpage.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppPageComponent,
+    HeaderComponent,
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
-    BrowserModule, HttpModule, InfiniteScrollModule
+    BrowserModule, HttpModule, InfiniteScrollModule, routing
   ],
   providers: [
     networkService
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
