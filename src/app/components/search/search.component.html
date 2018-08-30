@@ -4,15 +4,15 @@
   </div>
   <div id="content-scroller">
     <div>
-      <!--div id="columns">
+      <div id="columns" class="cards-wrap">
         <div class="card cardx" *ngFor="let data of dataList" [style.height]="getGifMinHeight(data)">
-          <a class="img" href="/gifs/{{data.giftuid}}" [style.background-image]="getSanitizedGifUrl(data)" [style.height]="getGifMinHeight(data)"></a>
-          <div class="inside">
-            <h3>{{data.category}} </h3>
-            <div class="description">{{data.group}} </div>
+          <a class="img" [routerLink]="getGroupSearchLink(data)" [style.background-image]="getSanitizedGifUrl(data)" 
+              [style.height]="getGifMinHeight(data)"></a>
+          <div class="desc">
+            <span class="description">{{data.group}}</span> 
           </div>
         </div>
-      </div-->
+      </div>
 
       <!--loading-->
       <div class="loading loading-more-indicator" *ngIf="showLoader">

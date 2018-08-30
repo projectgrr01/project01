@@ -7,7 +7,7 @@ declare var $: any;
     selector: 'app-header',
     template: `<div class="header">
             <div class="container">
-            <div class="logo"> <a href="/"><img src="/assets/images/logo.png"  style="width:80px" /> </a> </div>
+            <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/logo.png"  style="width:80px" /> </a> </div>
             <div class="search">
                 <input type="search" name="search" placeholder="Search Gif's"  ng-model="searchkey" />
                 <a class="searchBtn" href="/search-result/{{searchkey}}"><i class="fa fa-search" aria-hidden="true"></i></a> </div>

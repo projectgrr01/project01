@@ -55,4 +55,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private getGifMinHeight(data: any) {
     return `${data.media.actual.height - 20}px`;
   }
+  private getGifMinHeightCover(data: any) {
+    return `${data.media.actual.height + 40}px`;
+  }
 }

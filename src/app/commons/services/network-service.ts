@@ -6,7 +6,8 @@ import { map } from 'rxjs/operators';
 
 const subUrls: any = {
     CATEGORYURL: 'categories/',
-    GROUPS: '/groups'
+    GROUPS: '/groups',
+    SEARCH: '/search'
 }
 
 @Injectable()
@@ -33,6 +34,16 @@ export class networkService {
 
     public getCategoryGroupsData(category: String): Observable<any> {
         return this.http.get(this.baseSiteUrl + category + subUrls.GROUPS)
+            .pipe(map(data => data.json()));
+    }
+
+    public getCategoryGroupsCoverData(category: string, group: string): Observable<any> {
+        let reqParams = new URLSearchParams();
+        reqParams.set('category', category);
+        reqParams.set('group', group);
+        reqParams.set('size', '1');
+        let options = new RequestOptions({ params: reqParams.toString() });
+        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
             .pipe(map(data => data.json()));
     }
 }
