@@ -38,10 +38,19 @@ export class networkService {
     }
 
     public getCategoryGroupsCoverData(category: string, group: string): Observable<any> {
+        return this.getCategoryGroupSearchData(category, group, 0, 1);
+    }
+
+    public getCategoryGroupsSearchData(category: string, group: string, pageNumber: number): Observable<any> {
+        return this.getCategoryGroupSearchData(category, group, pageNumber, environment.sizeOfChunk);
+    }
+
+    private getCategoryGroupSearchData(category: string, group: string, pageNumber: number, size: number): Observable<any> {
         let reqParams = new URLSearchParams();
         reqParams.set('category', category);
         reqParams.set('group', group);
-        reqParams.set('size', '1');
+        reqParams.set('page', pageNumber.toString());
+        reqParams.set('size', size.toString());
         let options = new RequestOptions({ params: reqParams.toString() });
         return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
             .pipe(map(data => data.json()));

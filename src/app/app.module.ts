@@ -10,6 +10,7 @@ import { SearchComponent } from './components/search/search.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AppPageComponent } from './components/fullpage.component';
+import { InfiniteComponent } from './components/infinitecomponent/infinite.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppPageComponent } from './components/fullpage.component';
     AppPageComponent,
     HeaderComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    InfiniteComponent
   ],
   imports: [
     BrowserModule, HttpModule, InfiniteScrollModule, routing
