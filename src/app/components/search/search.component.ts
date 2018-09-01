@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private currentGroupChunkStartIndex: number;
     private currentGroupChunkLength: number;
     private routeSubscriber: any;
-    private dataList: any;
+    private groupDataList: any;
     private categoryGroupSearchDataList: any;
     private pageNumber: number;
 
@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.pageNumber = 0;
 
             this.categoryGroupsList = [];
-            this.dataList = [];
+            this.groupDataList = [];
             this.currentGroupChunkStartIndex = 0;
             this.currentGroupChunkLength = 10;
             this.categoryGroupSearchDataList = [];
@@ -68,7 +68,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     tempDataList.push(response.content[0]);
                 }
                 if (--totalReqCount === 0) {
-                    this.dataList = this.dataList.concat(tempDataList);
+                    this.groupDataList = this.groupDataList.concat(tempDataList);
                 }
             });
         }
@@ -81,7 +81,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.getCoverImageForGroupTile(this.category, categoryGroupPart);
     }
 
-    private onScrollData() {
+    private onLoadMoreData() {
         this.pageNumber++;
         this.getSearchData();
     }

@@ -501,7 +501,7 @@ md-content {
   min-width: 100px;
   max-width: 400px;
   min-height: 100px;
-  max-height: 400px;
+  max-height: 340px;
 }
 .cardx .inside {
   padding: 10px !important;

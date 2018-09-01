@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() { }
 
-  private onScroll(): void {
+  private onLoadMoreData(): void {
     this.populateGridData();
   }
 
