@@ -5,9 +5,9 @@ This project is build with [Angular CLI](https://github.com/angular/angular-cli)
 ## Setup on local
 
 Navigate to checked out directory
-Install *Node* (From nodejs site directly or by some package manager)
-Install *Angular/cli* (Run command `npm install -g @angular/cli`)
-Install *dependencies* (Run command `npm install`)
+1. Install *Node* (From nodejs site directly or by some package manager)
+2. Install *Angular/cli* (Run command `npm install -g @angular/cli`)
+3. Install *dependencies* (Run command `npm install`)
 
 ## Run Development server
 
