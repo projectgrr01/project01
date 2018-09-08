@@ -1,0 +1,14 @@
+<div class="container contents" layout="column">
+  <div id="content-scroller">
+    <div>
+
+      <app-infinite-component [dataList]="tagSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
+
+      <!--loading-->
+      <div class="loading loading-more-indicator" *ngIf="showLoader">
+        <div class="lds-ripple"><span></span><span></span><span></span></div>
+      </div>
+      <!--// loading-->
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ const subUrls: any = {
 }
 
 @Injectable()
-export class networkService {
+export class NetworkService {
     private baseSiteUrl;
 
     constructor (private http: Http) {
@@ -43,6 +43,28 @@ export class networkService {
 
     public getCategoryGroupsSearchData(category: string, group: string, pageNumber: number): Observable<any> {
         return this.getCategoryGroupSearchData(category, group, pageNumber, environment.sizeOfChunk);
+    }
+
+    public getTagsSearchData(tag: string, pageNumber: number): Observable<any> {
+        return this.getTagSearchData(tag, pageNumber, environment.sizeOfChunk);
+    }
+
+    public getGifDataByUid(gifId: string): Observable<any> {
+        let reqParams = new URLSearchParams();
+        reqParams.set('giftuid', gifId);
+        let options = new RequestOptions({ params: unescape(reqParams.toString()) });
+        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
+            .pipe(map(data => data.json()));
+    }
+
+    public getTagSearchData(tag: string, pageNumber: number, size: number): Observable<any> {
+        let reqParams = new URLSearchParams();
+        reqParams.set('tags', tag);
+        reqParams.set('page', pageNumber.toString());
+        reqParams.set('size', size.toString());
+        let options = new RequestOptions({ params: unescape(reqParams.toString()) });
+        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
+            .pipe(map(data => data.json()));
     }
 
     private getCategoryGroupSearchData(category: string, group: string, pageNumber: number, size: number): Observable<any> {

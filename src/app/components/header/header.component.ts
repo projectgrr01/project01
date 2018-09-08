@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { networkService } from '../../commons/services/network-service';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { NetworkService } from '../../commons/services/network-service';
 
 declare var $: any;
 
@@ -7,10 +7,13 @@ declare var $: any;
     selector: 'app-header',
     template: `<div class="header">
             <div class="container">
-            <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/logo.png"  style="width:80px" /> </a> </div>
-            <div class="search">
-                <input type="search" name="search" placeholder="Search Gif's"  ng-model="searchkey" />
-                <a class="searchBtn" href="/search-result/{{searchkey}}"><i class="fa fa-search" aria-hidden="true"></i></a> </div>
+                <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/logo.png"  style="width:80px" /> </a> </div>
+                <div class="search">
+                    <input type="search" name="search" placeholder="Search Gif's"
+                        [(ngModel)]="searchkey" (keyup.enter)="clickSearchBtn()" />
+                    <a #searchBtn class="searchBtn" [routerLink]="'/search-result/' + searchkey">
+                        <i class="fa fa-search" aria-hidden="true"></i></a>
+                </div>
             </div>
             <!--nav-->
             <div class="tops-nav" >
@@ -32,10 +35,12 @@ declare var $: any;
 export class HeaderComponent implements OnInit, AfterViewInit {
 
     @ViewChildren('categoryItems') categoryItems: QueryList<any>;
+    @ViewChild('searchBtn') searchBtn: ElementRef;
 
     categories: any[] = [];
+    private searchkey = '';
 
-    constructor(private network: networkService) {}
+    constructor(private network: NetworkService) {}
 
     ngOnInit(): void {
         this.network.getMenuCategories().subscribe(response => {
@@ -51,6 +56,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     private categoryItemsRendred() {
       $('ul.menu.flex').flexMenu();
+    }
+
+    private clickSearchBtn() {
+        this.searchBtn.nativeElement.click();
     }
 
     private getSearchUrl(category: String): String {

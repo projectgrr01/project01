@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="col-md-3 sidebarLeft">
+        <h3 class="ng-binding">{{imageData.category}} / {{imageData.group}}</h3>
+        <div class="social">
+            <h4>Share it! :</h4>
+            <share-container
+                direction="horizontal"
+                addedText=""
+                [expandable]="false"
+                [textEnabled]="false"
+                [platforms]="['facebook','twitter','pinterest']">
+	        </share-container>
+        </div>
+        <div class="tags"><i class="fa fa-code" aria-hidden="true"></i> <a data-toggle="modal" data-target="#embed">Image Embed Code</a> </div>
+        <div class="tags"><i class="fa fa-link" aria-hidden="true"></i> <a data-toggle="modal" data-target="#copyLink">Copy Link</a> </div>
+    </div>
+    <div class="col-md-9 rightContent">
+        <div class="imageArea"> 
+            <a *ngIf="imageData" class="mainImg ng-scope"> 
+                <img [src]="getSanitizedGifSrcUrl(imageData)" style="min-width:300px;" [alt]="getSanitizedGifPageUrl(imageData)">
+                <div class="clearfix"></div>
+            </a>
+            <div class="bottom_Area"> 
+                <span class="pull-left ng-binding">Category : {{imageData.category}} | Group : {{imageData.group}}</span> 
+                <span class="pull-right socialShare"> Share it : 
+                        <share-container
+                            direction="horizontal"
+                            addedText=""
+                            [expandable]="false"
+                            [textEnabled]="false"
+                            [platforms]="['facebook','twitter','pinterest']">
+                        </share-container>
+                </span>
+            </div>
+        </div>
+        <!--related -->
+        <div class="relatedData">
+        <div class="headerTitle">
+            <h3>Related Gifs</h3>
+        </div>
+        <div class="row">
+            <div>
+                <app-infinite-component [dataList]="dataList" 
+                    (loadMoreData)="onLoadMoreData()"></app-infinite-component>
+                
+                <!--loading-->
+                <div class="loading loading-more-indicator" *ngIf="showLoader">
+                <div class="lds-ripple"><span></span><span></span><span></span></div>
+                </div>
+                <!--// loading-->
+            </div>
+        </div>
+    </div>
+    <!--end related-->
+    <!-- embed Modal -->
+    <div id="embed" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Embed Code</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea (click)="$event.target.select()" readonly="readonly"><iframe src="{{embedUrl}}{{imageUid}}" style="width:100vw; height:100vh;" frameborder="0" allowtransparency="1" scrolling="no"></iframe></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- // embed Modal -->
+    <!-- copylink Modal -->
+    <div id="copyLink" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title color-white">Copy link</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-title color-white">Copy link</h4>
+                <textarea select-on-click readonly="readonly" style="height:30px;"
+                    (click)="$event.target.select()">{{imageData.media.actual.shorten}}</textarea>
+                
+                <h4 class="modal-title color-white">Mp4 link</h4>
+                <textarea  select-on-click readonly="readonly" style="height:30px;" 
+                    [innerText]="mp4Url + imageUid" (click)="$event.target.select()"></textarea>
+                
+                <h4 class="modal-title color-white">Webm link</h4>
+                <textarea  select-on-click readonly="readonly" style="height:30px;"
+                    [innerText]="webmUrl + imageUid" (click)="$event.target.select()"></textarea>
+                
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- // copylink Modal -->
+  </div>
+   </div>

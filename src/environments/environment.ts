@@ -5,8 +5,15 @@
 export const environment = {
   production: false,
   site: 'http://library.gifkaro.com/gift/v1/',
+  // site: 'https://api.gifkaro.com/gift/v2/',
+  siteRootUrl: 'http://gifkaro.com/',
   defaultCategory: 'trend',
-  sizeOfChunk: 20
+  sizeOfChunk: 20,
+  pathNames : {
+    embedImg: 'embed/img/',
+    embedMp4: 'embed/mp4/',
+    embedWebm: 'embed/webm/'
+  }
 };
 
 /*

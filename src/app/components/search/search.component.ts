@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { networkService } from '../../commons/services/network-service';
+import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -9,6 +9,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class SearchComponent implements OnInit, OnDestroy {
+
+    private showLoader = true;
     private category: string;
     private group: string;
     private categoryGroupsList: string[];
@@ -20,7 +22,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private pageNumber: number;
 
     constructor(private route: ActivatedRoute,
-                private netowrk: networkService,
+                private netowrk: NetworkService,
                 private sanitization: DomSanitizer) { }
 
     ngOnInit() {
@@ -47,6 +49,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     private getGroupsForCategory() {
+        this.showLoader = true;
         this.netowrk.getCategoryGroupsData(this.category).subscribe(response => {
             this.categoryGroupsList = response.groups;
             this.onScrollGroups();
@@ -54,8 +57,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     private getSearchData() {
+        this.showLoader = true;
         this.netowrk.getCategoryGroupsSearchData(this.category, this.group, this.pageNumber).subscribe(response => {
             this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
+            this.showLoader = false;
         });
     }
 
@@ -69,6 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
                 if (--totalReqCount === 0) {
                     this.groupDataList = this.groupDataList.concat(tempDataList);
+                    this.showLoader = false;
                 }
             });
         }

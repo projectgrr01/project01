@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer } from '@angular/core';
-import { networkService } from './commons/services/network-service';
+import { NetworkService } from './commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 interface Window { MyNamespace: any; }
@@ -26,7 +26,7 @@ export class AppComponent {// implements OnInit, AfterViewInit {
   showLoader = true;
   currentPage = 0;*/
 
-  constructor (private network: networkService,
+  constructor (private network: NetworkService,
               private sanitization: DomSanitizer) {
   }
 
