@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UtilityService } from '../../commons/services/utility.service';
 
 @Component({
     selector: 'app-search',
@@ -23,12 +24,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private netowrk: NetworkService,
-                private sanitization: DomSanitizer) { }
+                private sanitization: DomSanitizer,
+                private utility: UtilityService) { }
 
     ngOnInit() {
         this.routeSubscriber = this.route.params.subscribe(params => {
             this.category = params['category'];
-            this.group = params['group'];
+            this.group = params['group'] || '';
             this.pageNumber = 0;
 
             this.categoryGroupsList = [];
@@ -36,7 +38,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.currentGroupChunkStartIndex = 0;
             this.currentGroupChunkLength = 10;
             this.categoryGroupSearchDataList = [];
-            if (this.group == undefined) {
+            if (this.group === '') {
                 this.getGroupsForCategory();
             } else {
                 this.getSearchData();
@@ -68,7 +70,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         let tempDataList = [];
         let totalReqCount = groups.length;
         for (let group of groups) {
-            this.netowrk.getCategoryGroupsCoverData(category, group).subscribe(response => {
+            this.netowrk.getCategoryGroupsCoverData(category, group[this.utility.language]).subscribe(response => {
                 if (response.content && response.content.length > 0) {
                     tempDataList.push(response.content[0]);
                 }
@@ -96,12 +98,12 @@ export class SearchComponent implements OnInit, OnDestroy {
         return '/search/' + data.category + '/' + data.group;
     }
     private getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.tiny.url})`);
+        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
     private getGifMinHeight(data: any) {
-        return `${data.media.actual.height - 20}px`;
+        return `${data.media.gif.actual.height - 20}px`;
     }
     private getGifMinHeightCover(data: any) {
-      return `${data.media.actual.height + 40}px`;
+      return `${data.media.gif.actual.height + 40}px`;
     }
 }

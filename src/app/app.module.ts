@@ -16,6 +16,7 @@ import { GifviewerComponent } from './components/gifviewer/gifviewer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchTagResultComponent } from './components/search-result/search-result.component';
 import { FormsModule } from '@angular/forms';
+import { UtilityService } from './commons/services/utility.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule
   ],
   providers: [
-    NetworkService
+    NetworkService,
+    UtilityService
   ],
   bootstrap: [AppComponent]
 })

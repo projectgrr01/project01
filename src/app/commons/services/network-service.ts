@@ -3,23 +3,23 @@ import { Http, Response, RequestOptions } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UtilityService } from './utility.service';
 
 const subUrls: any = {
-    CATEGORYURL: 'categories/',
+    CATEGORYURL: 'categories',
     GROUPS: '/groups',
-    SEARCH: '/search'
+    SEARCH: 'search'
 }
 
 @Injectable()
 export class NetworkService {
-    private baseSiteUrl;
 
-    constructor (private http: Http) {
-        this.baseSiteUrl = environment.site;
+    constructor (private http: Http,
+                private utility: UtilityService) {
      }
 
     public getMenuCategories(): Observable<any> {
-        return this.http.get(this.baseSiteUrl + subUrls.CATEGORYURL)
+        return this.http.get(this.utility.baseApiUrl + subUrls.CATEGORYURL)
             .pipe(map(data => data.json()));
     }
 
@@ -28,12 +28,12 @@ export class NetworkService {
         reqParams.set('page', pageNumber.toString());
         reqParams.set('size', environment.sizeOfChunk.toString());
         let options = new RequestOptions({ params: reqParams.toString() });
-        return this.http.get(this.baseSiteUrl + environment.defaultCategory, options)
+        return this.http.get(this.utility.baseApiUrl + environment.defaultCategory, options)
             .pipe(map(data => data.json()));
     }
 
     public getCategoryGroupsData(category: String): Observable<any> {
-        return this.http.get(this.baseSiteUrl + category + subUrls.GROUPS)
+        return this.http.get(this.utility.baseApiUrl + category + subUrls.GROUPS)
             .pipe(map(data => data.json()));
     }
 
@@ -50,10 +50,10 @@ export class NetworkService {
     }
 
     public getGifDataByUid(gifId: string): Observable<any> {
-        let reqParams = new URLSearchParams();
-        reqParams.set('giftuid', gifId);
-        let options = new RequestOptions({ params: unescape(reqParams.toString()) });
-        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
+        //let reqParams = new URLSearchParams();
+        //reqParams.set('giftuid', gifId);
+        //let options = new RequestOptions({ params: unescape(reqParams.toString()) });
+        return this.http.get(this.utility.baseApiUrl + gifId)
             .pipe(map(data => data.json()));
     }
 
@@ -63,7 +63,7 @@ export class NetworkService {
         reqParams.set('page', pageNumber.toString());
         reqParams.set('size', size.toString());
         let options = new RequestOptions({ params: unescape(reqParams.toString()) });
-        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
+        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH, options)
             .pipe(map(data => data.json()));
     }
 
@@ -74,7 +74,7 @@ export class NetworkService {
         reqParams.set('page', pageNumber.toString());
         reqParams.set('size', size.toString());
         let options = new RequestOptions({ params: reqParams.toString() });
-        return this.http.get(this.baseSiteUrl + subUrls.SEARCH, options)
+        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH, options)
             .pipe(map(data => data.json()));
     }
 }

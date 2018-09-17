@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 
 export class GifviewerComponent implements OnInit, OnDestroy {
 
-    private imageData: any;
+    private imageData: any = {category: '', group: ''};
     private imageUid: string;
     private routeSubscriber: any;
     private mp4Url = environment.siteRootUrl + environment.pathNames.embedMp4;
@@ -28,13 +28,10 @@ export class GifviewerComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.routeSubscriber = this.route.params.subscribe(params => {
-            this.imageData = null;
+            this.imageData = {category: '', group: ''};
             this.imageUid = unescape(params['gifid']);
             this.getGifData();
         });
-        this.dataList = [];
-        this.currentPage = 0;
-        this.populateGridData();
     }
 
     ngOnDestroy() {
@@ -56,17 +53,36 @@ export class GifviewerComponent implements OnInit, OnDestroy {
 
     private getGifData(): void {
         this.network.getGifDataByUid(this.imageUid).subscribe(response => {
-            this.imageData = response.content[0];
+            this.imageData = response;
+            this.dataList = [];
+            this.currentPage = 0;
+            this.populateGridData();
         }) ;
     }
 
+    get shortenUrl(): string {
+        if (this.imageData.category === '') {
+            return '';
+        }
+        return this.imageData.media.gif.actual.shorten;
+    }
+
     private getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.tiny.url})`);
+        if (data.category === '') {
+            return '';
+        }
+        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
     private getSanitizedGifPageUrl(data: any): SafeUrl {
+        if (data.category === '') {
+            return '';
+        }
         return this.sanitization.bypassSecurityTrustUrl('/gifs/' + data.giftuid);
     }
     private getSanitizedGifSrcUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustResourceUrl(data.media.actual.url);
+        if (data.category === '') {
+            return '';
+        }
+        return this.sanitization.bypassSecurityTrustResourceUrl(data.media.gif.actual.url);
     }
 }

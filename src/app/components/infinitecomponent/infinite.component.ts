@@ -34,12 +34,12 @@ export class InfiniteComponent {
         return '/search/' + data.category + '/' + data.group;
     }
     private getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.tiny.url})`);
+        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
     private getGifMinHeight(data: any) {
-        return `${data.media.actual.height - 20}px`;
+        return `${data.media.gif.actual.height - 20}px`;
     }
     private getGifMinHeightCover(data: any) {
-      return `${data.media.actual.height + 40}px`;
+      return `${data.media.gif.actual.height + 40}px`;
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NetworkService } from '../../commons/services/network-service';
+import { UtilityService } from '../../commons/services/utility.service';
 
 declare var $: any;
 
@@ -21,7 +22,8 @@ declare var $: any;
                 <div class="menux">
                 <ul class="menu flex">
                     <li #categoryItems *ngFor="let category of categories">
-                    <a [routerLink]="getSearchUrl(category)" routerLinkActive="router-link-active">{{category}}</a>
+                    <a [routerLink]="getSearchUrl(category)" routerLinkActive="router-link-active"
+                        [innerHTML]="getCategoryText(category)"></a>
                     </li>
                 </ul>
                 <div class="clearfix"> </div>
@@ -40,7 +42,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     categories: any[] = [];
     private searchkey = '';
 
-    constructor(private network: NetworkService) {}
+    constructor(private network: NetworkService,
+                private utility: UtilityService) {}
 
     ngOnInit(): void {
         this.network.getMenuCategories().subscribe(response => {
@@ -54,6 +57,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         });
     }
 
+    private getCategoryText(category: any): string {
+        return category[this.utility.language];
+    }
+
     private categoryItemsRendred() {
       $('ul.menu.flex').flexMenu();
     }
@@ -63,6 +70,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
 
     private getSearchUrl(category: String): String {
-        return '/search/' + category.replace(' ', '-');
+        return '/search/' + category[this.utility.language].replace(' ', '-');
     }
 }

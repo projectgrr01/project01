@@ -1,6 +1,6 @@
 <div class="container contents" layout="column">
   <div class="headerTitle">
-    <h3>{{category}}</h3>
+    <h3>{{category}}<span *ngIf="group != ''"> / {{group}}</span></h3>
   </div>
   <div id="content-scroller">
     <div>

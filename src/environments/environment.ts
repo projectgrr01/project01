@@ -4,11 +4,12 @@
 
 export const environment = {
   production: false,
-  site: 'http://library.gifkaro.com/gift/v1/',
-  // site: 'https://api.gifkaro.com/gift/v2/',
+  // site: 'http://library.gifkaro.com/gift/v1/',
+  apiUrl: 'https://api.gifkaro.com/gift/v2/',
   siteRootUrl: 'http://gifkaro.com/',
-  defaultCategory: 'trend',
-  sizeOfChunk: 20,
+  defaultLanguage: 'english',
+  defaultCategory: 'trends',
+  sizeOfChunk: 5,
   pathNames : {
     embedImg: 'embed/img/',
     embedMp4: 'embed/mp4/',
