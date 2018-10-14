@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer } from '@angular/core';
+import { WINDOW } from '@ng-toolkit/universal';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject} from '@angular/core';
 import { NetworkService } from './commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 

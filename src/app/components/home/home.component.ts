@@ -1,13 +1,8 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer } from '@angular/core';
+import { WINDOW } from '@ng-toolkit/universal';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject} from '@angular/core';
 import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 
-interface Window { MyNamespace: any; }
-interface MyWindow extends Window {
-  test: any;
-}
-
-declare var window: MyWindow;
 declare var $: any;
 
 @Component({
@@ -35,7 +30,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() { }
 
-  private onLoadMoreData(): void {
+  public onLoadMoreData(): void {
     this.populateGridData();
   }
 
@@ -44,18 +39,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.network.getTrendingData(this.currentPage).subscribe(response => {
       this.currentPage++;
       this.dataList = this.dataList.concat(response.content);
-      window.test = this.dataList;
       this.showLoader = false;
     });
   }
 
-  private getSanitizedGifUrl(data: any) {
+  public getSanitizedGifUrl(data: any) {
     return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.regular.url})`)
   }
-  private getGifMinHeight(data: any) {
+  public getGifMinHeight(data: any) {
     return `${data.media.actual.height - 20}px`;
   }
-  private getGifMinHeightCover(data: any) {
+  public getGifMinHeightCover(data: any) {
     return `${data.media.actual.height + 40}px`;
   }
 }

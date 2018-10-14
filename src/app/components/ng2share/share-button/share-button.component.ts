@@ -1,3 +1,5 @@
+import { Inject } from '@angular/core';
+import { WINDOW } from '@ng-toolkit/universal';
 import { Component, Input, OnInit }
         from '@angular/core';
 import { trigger,state,style,transition,animate } from '@angular/animations'; 
@@ -30,7 +32,7 @@ export class ShareButtonComponent implements OnInit{
   @Input() properties:Properties;
   url:string;
 
-  constructor(){
+  constructor(@Inject(WINDOW) private window: Window, ){
 
   }
 
@@ -40,7 +42,7 @@ export class ShareButtonComponent implements OnInit{
   }
 
   click(event){
-      window.open(this.url, 'newwindow', 'width=1070, height=600');
+      this.window.open(this.url, 'newwindow', 'width=1070, height=600');
       event.preventDefault();
   }
 

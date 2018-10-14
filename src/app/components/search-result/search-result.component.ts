@@ -9,11 +9,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class SearchTagResultComponent implements OnInit, OnDestroy {
-    private tag: string;
+    public tag: string;
+    public tagSearchDataList: any;
+    public pageNumber: number;
+    public showLoader = true;
     private routeSubscriber: any;
-    private tagSearchDataList: any;
-    private pageNumber: number;
-    private showLoader = true;
 
     constructor(private route: ActivatedRoute,
                 private netowrk: NetworkService,
@@ -42,18 +42,18 @@ export class SearchTagResultComponent implements OnInit, OnDestroy {
         });
     }
 
-    private onLoadMoreData() {
+    public onLoadMoreData() {
         this.pageNumber++;
         this.getSearchDataFortag();
     }
 
-    private getGroupSearchLink(data: any) {
+    public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
     }
-    private getSanitizedGifUrl(data: any) {
+    public getSanitizedGifUrl(data: any) {
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.tiny.url})`);
     }
-    private getGifMinHeight(data: any) {
+    public getGifMinHeight(data: any) {
         return `${data.media.actual.height - 20}px`;
     }
     private getGifMinHeightCover(data: any) {

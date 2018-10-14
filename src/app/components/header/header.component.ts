@@ -36,11 +36,11 @@ declare var $: any;
 
 export class HeaderComponent implements OnInit, AfterViewInit {
 
-    @ViewChildren('categoryItems') categoryItems: QueryList<any>;
-    @ViewChild('searchBtn') searchBtn: ElementRef;
+    @ViewChildren('categoryItems') public categoryItems: QueryList<any>;
+    @ViewChild('searchBtn') public searchBtn: ElementRef;
 
     categories: any[] = [];
-    private searchkey = '';
+    public searchkey = '';
 
     constructor(private network: NetworkService,
                 private utility: UtilityService) {}
@@ -57,19 +57,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         });
     }
 
-    private getCategoryText(category: any): string {
+    public getCategoryText(category: any): string {
         return category[this.utility.language];
     }
 
     private categoryItemsRendred() {
-      $('ul.menu.flex').flexMenu();
+        if (typeof($) !== 'undefined') {
+            $('ul.menu.flex').flexMenu();
+        }
     }
 
-    private clickSearchBtn() {
+    public clickSearchBtn() {
         this.searchBtn.nativeElement.click();
     }
 
-    private getSearchUrl(category: String): String {
+    public getSearchUrl(category: String): String {
         return '/search/' + category[this.utility.language].replace(' ', '-');
     }
 }

@@ -24,11 +24,9 @@ export class NetworkService {
     }
 
     public getTrendingData(pageNumber: number): Observable<any> {
-        let reqParams = new URLSearchParams();
-        reqParams.set('page', pageNumber.toString());
-        reqParams.set('size', environment.sizeOfChunk.toString());
-        let options = new RequestOptions({ params: reqParams.toString() });
-        return this.http.get(this.utility.baseApiUrl + environment.defaultCategory, options)
+        /*coundn't use URLSearchParams due to SEO visibility*/
+        let params = '?page=' + pageNumber.toString() + '&size=' + environment.sizeOfChunk.toString();
+        return this.http.get(this.utility.baseApiUrl + environment.defaultCategory + params)
             .pipe(map(data => data.json()));
     }
 
@@ -50,31 +48,19 @@ export class NetworkService {
     }
 
     public getGifDataByUid(gifId: string): Observable<any> {
-        //let reqParams = new URLSearchParams();
-        //reqParams.set('giftuid', gifId);
-        //let options = new RequestOptions({ params: unescape(reqParams.toString()) });
         return this.http.get(this.utility.baseApiUrl + gifId)
             .pipe(map(data => data.json()));
     }
 
     public getTagSearchData(tag: string, pageNumber: number, size: number): Observable<any> {
-        let reqParams = new URLSearchParams();
-        reqParams.set('tags', tag);
-        reqParams.set('page', pageNumber.toString());
-        reqParams.set('size', size.toString());
-        let options = new RequestOptions({ params: unescape(reqParams.toString()) });
-        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH, options)
+        let options = '?tags=' + tag + '&page=' + pageNumber.toString() + '&size=' + size.toString();
+        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH + options)
             .pipe(map(data => data.json()));
     }
 
     private getCategoryGroupSearchData(category: string, group: string, pageNumber: number, size: number): Observable<any> {
-        let reqParams = new URLSearchParams();
-        reqParams.set('category', category);
-        reqParams.set('group', group);
-        reqParams.set('page', pageNumber.toString());
-        reqParams.set('size', size.toString());
-        let options = new RequestOptions({ params: reqParams.toString() });
-        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH, options)
+        let options = '?category=' + category + '&group=' + group + '&page=' + pageNumber.toString() + '&size=' + size.toString();
+        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH + options)
             .pipe(map(data => data.json()));
     }
 }

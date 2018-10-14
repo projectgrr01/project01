@@ -1,3 +1,5 @@
+import { Inject } from '@angular/core';
+import { WINDOW } from '@ng-toolkit/universal';
 import { Component, Input, OnInit, ViewEncapsulation}
         from '@angular/core';
 import { trigger,state,style,transition,animate } from '@angular/animations';
@@ -42,6 +44,8 @@ export class ShareContainerComponent implements OnInit{
   _direction:string = 'horizontal';
   // state of the secondary platform expandable pannel
   expandedState:string = "collapsed";
+ constructor(@Inject(WINDOW) private window: Window) {}
+
 
   ngOnInit(){
     this.fetchProperties();
@@ -50,7 +54,7 @@ export class ShareContainerComponent implements OnInit{
     this.expandedState = (this.expandedState == 'collapsed' ? 'expanded' : 'collapsed');
   }
   fetchProperties(){
-    this.properties.url = this.properties.url || this.getMetaContent('og:url') || window.location.href.toString();
+    this.properties.url = this.properties.url || this.getMetaContent('og:url') || this.window.location.href.toString();
     this.properties.title = this.properties.title || this.getMetaContent('og:title') || document.title;
     this.properties.description = this.properties.description || this.getMetaContent('og:description');
     this.properties.image = this.properties.image || this.getMetaContent('og:image');

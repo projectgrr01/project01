@@ -23,23 +23,23 @@ export class InfiniteComponent {
 
     constructor(private sanitization: DomSanitizer) { }
 
-    private dataScrolled(): void {
+    public dataScrolled(): void {
         this.loadMoreData.emit(true);
     }
 
-    private getEscapedUrl(data: any) {
+    public getEscapedUrl(data: any) {
         return escape('/gifs/' + data.giftuid);
     }
-    private getGroupSearchLink(data: any) {
+    public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
     }
-    private getSanitizedGifUrl(data: any) {
+    public getSanitizedGifUrl(data: any) {
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
-    private getGifMinHeight(data: any) {
+    public getGifMinHeight(data: any) {
         return `${data.media.gif.actual.height - 20}px`;
     }
-    private getGifMinHeightCover(data: any) {
+    public getGifMinHeightCover(data: any) {
       return `${data.media.gif.actual.height + 40}px`;
     }
 }

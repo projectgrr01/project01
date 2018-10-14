@@ -11,16 +11,16 @@ import { UtilityService } from '../../commons/services/utility.service';
 
 export class SearchComponent implements OnInit, OnDestroy {
 
-    private showLoader = true;
-    private category: string;
-    private group: string;
-    private categoryGroupsList: string[];
-    private currentGroupChunkStartIndex: number;
-    private currentGroupChunkLength: number;
-    private routeSubscriber: any;
-    private groupDataList: any;
-    private categoryGroupSearchDataList: any;
-    private pageNumber: number;
+    public showLoader = true;
+    public category: string;
+    public group: string;
+    public categoryGroupsList: string[];
+    public currentGroupChunkStartIndex: number;
+    public currentGroupChunkLength: number;
+    public routeSubscriber: any;
+    public groupDataList: any;
+    public categoryGroupSearchDataList: any;
+    public pageNumber: number;
 
     constructor(private route: ActivatedRoute,
                 private netowrk: NetworkService,
@@ -89,18 +89,18 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.getCoverImageForGroupTile(this.category, categoryGroupPart);
     }
 
-    private onLoadMoreData() {
+    public onLoadMoreData() {
         this.pageNumber++;
         this.getSearchData();
     }
 
-    private getGroupSearchLink(data: any) {
+    public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
     }
-    private getSanitizedGifUrl(data: any) {
+    public getSanitizedGifUrl(data: any) {
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
-    private getGifMinHeight(data: any) {
+    public getGifMinHeight(data: any) {
         return `${data.media.gif.actual.height - 20}px`;
     }
     private getGifMinHeightCover(data: any) {

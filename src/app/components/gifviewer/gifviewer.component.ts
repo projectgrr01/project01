@@ -11,16 +11,16 @@ import { environment } from '../../../environments/environment';
 
 export class GifviewerComponent implements OnInit, OnDestroy {
 
-    private imageData: any = {category: '', group: ''};
-    private imageUid: string;
-    private routeSubscriber: any;
-    private mp4Url = environment.siteRootUrl + environment.pathNames.embedMp4;
-    private webmUrl = environment.siteRootUrl + environment.pathNames.embedWebm;
-    private embedUrl = environment.siteRootUrl + environment.pathNames.embedImg;
+    public imageData: any = {category: '', group: ''};
+    public imageUid: string;
+    public routeSubscriber: any;
+    public mp4Url = environment.siteRootUrl + environment.pathNames.embedMp4;
+    public webmUrl = environment.siteRootUrl + environment.pathNames.embedWebm;
+    public embedUrl = environment.siteRootUrl + environment.pathNames.embedImg;
 
-    private dataList: any[] = [];
-    private showLoader = true;
-    private currentPage = 0;
+    public dataList: any[] = [];
+    public showLoader = true;
+    public currentPage = 0;
 
     constructor (private route: ActivatedRoute,
                 private network: NetworkService,
@@ -37,7 +37,8 @@ export class GifviewerComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.routeSubscriber.unsubscribe();
     }
-    private onLoadMoreData(): void {
+
+    public onLoadMoreData(): void {
         this.populateGridData();
     }
 
@@ -51,7 +52,7 @@ export class GifviewerComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getGifData(): void {
+    public getGifData(): void {
         this.network.getGifDataByUid(this.imageUid).subscribe(response => {
             this.imageData = response;
             this.dataList = [];
@@ -67,19 +68,19 @@ export class GifviewerComponent implements OnInit, OnDestroy {
         return this.imageData.media.gif.actual.shorten;
     }
 
-    private getSanitizedGifUrl(data: any) {
+    public getSanitizedGifUrl(data: any) {
         if (data.category === '') {
             return '';
         }
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
-    private getSanitizedGifPageUrl(data: any): SafeUrl {
+    public getSanitizedGifPageUrl(data: any): SafeUrl {
         if (data.category === '') {
             return '';
         }
         return this.sanitization.bypassSecurityTrustUrl('/gifs/' + data.giftuid);
     }
-    private getSanitizedGifSrcUrl(data: any) {
+    public getSanitizedGifSrcUrl(data: any) {
         if (data.category === '') {
             return '';
         }

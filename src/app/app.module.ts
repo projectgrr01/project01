@@ -1,3 +1,5 @@
+import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -30,7 +32,8 @@ import { UtilityService } from './commons/services/utility.service';
     InfiniteComponent
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
+    NgtUniversalModule,
     FormsModule,
     HttpModule,
     routing,
@@ -41,8 +44,7 @@ import { UtilityService } from './commons/services/utility.service';
   providers: [
     NetworkService,
     UtilityService
-  ],
-  bootstrap: [AppComponent]
+  ]
 })
 
 export class AppModule { }
