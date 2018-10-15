@@ -18,6 +18,11 @@
         <div class="imageArea"> 
             <a *ngIf="imageData" class="mainImg ng-scope"> 
                 <img [src]="getSanitizedGifSrcUrl(imageData)" style="min-width:300px;" [alt]="getSanitizedGifPageUrl(imageData)">
+                <!--loading-->
+                <div class="loading loading-more-indicator" *ngIf="showLoader">
+                  <div class="lds-ripple"><span></span><span></span><span></span></div>
+                </div>
+                <!--// loading-->
                 <div class="clearfix"></div>
             </a>
             <div class="bottom_Area"> 

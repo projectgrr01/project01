@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <app-infinite-component [dataList]="categoryGroupSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
+      <app-infinite-component *ngIf="group != ''" [dataList]="categoryGroupSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
 
       <!--loading-->
       <div class="loading loading-more-indicator" *ngIf="showLoader">
