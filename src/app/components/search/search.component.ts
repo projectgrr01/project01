@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.routeSubscriber = this.route.params.subscribe(params => {
             this.category = params['category'];
-            this.group = params['group'] || '-';
+            this.group = params['group'] || '';
             this.pageNumber = 0;
 
             this.categoryGroupsList = [];
@@ -38,7 +38,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.currentGroupChunkStartIndex = 0;
             this.currentGroupChunkLength = 10;
             this.categoryGroupSearchDataList = [];
-            if (this.group === '-') {
+            if (this.group === '') {
                 this.getGroupsForCategory();
             } else {
                 this.getSearchData();
@@ -90,7 +90,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     get showGroupData(): boolean {
-        return this.group !== '-';
+        return this.group !== '';
     }
 
     public onLoadMoreData() {
