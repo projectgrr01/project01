@@ -89,6 +89,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.getCoverImageForGroupTile(this.category, categoryGroupPart);
     }
 
+    public showGroupData(): boolean {
+        return this.group !== '';
+    }
+
     public onLoadMoreData() {
         this.pageNumber++;
         this.getSearchData();
