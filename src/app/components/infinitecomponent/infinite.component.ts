@@ -34,7 +34,7 @@ export class InfiniteComponent {
         return '/search/' + data.category + '/' + data.group;
     }
     public getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
+        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.regular.url})`);
     }
     public getGifMinHeight(data: any) {
         return `${data.media.gif.actual.height - 20}px`;
