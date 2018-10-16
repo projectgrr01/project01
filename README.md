@@ -31,12 +31,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 2. Install *Angular/cli* (Run command `npm install -g @angular/cli`)
 3. Install *dependencies* (Run command `npm install`)
 4. if not already installed, run npm install --unsafe-perm node-sass
-5. npm install -g pm2		//This we are using to run and monitor the node server process
-6. npm run buid:prod		//Build for SEO and Bot compatible angular site
-7. pm2 start local.js		//This is equivalent to "npm run server" with added advantages
+5. `npm install -g pm2`		//This we are using to run and monitor the node server process
+6. `npm run buid:prod`		//Build for SEO and Bot compatible angular site
+7. `pm2 start local.js --name "gifkaro-node-service"`		//This is equivalent to "npm run server" with added advantages
 
 ## To update build on server
-1. Git pull
-2. npm run buid:prod
-3. pm2 restart local
+1. `Git pull`
+2. `npm run buid:prod`
+3. `pm2 restart gifkaro-node-service`
 
