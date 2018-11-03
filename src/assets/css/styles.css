@@ -557,7 +557,7 @@ md-content {
   color: #555; margin-top: 3px;
 }
 
-.cards-wrap {
+/*.cards-wrap {
   margin: 32px 0;
   padding-bottom: 64px;
   position: relative;
@@ -640,7 +640,31 @@ visibility: hidden;
 .grid-img.img-loaded{
 visibility: visible;
 opacity: 1;
+}*/
+@media (min-width: 768px) {
+	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 350px !important;
+	}
 }
+@media (min-width: 992px) {
+	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 305px !important;
+	}
+}
+@media (min-width: 1200px) {
+	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 370px !important;
+	}
+}
+a.img {
+	background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.img img {
+	width: 100%;
+}
+
 .color-white{ color:#FFF !important; margin:10px 0;}
 
 textarea {

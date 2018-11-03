@@ -4,16 +4,22 @@
   </div>
   <div id="content-scroller">
     <div>
-      <div id="columns" class="cards-wrap" *ngIf="groupDataList.length > 0" infiniteScroll 
-            [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups()">
-        <div class="card cardx" *ngFor="let data of groupDataList" [style.height]="getGifMinHeight(data)">
-          <a class="img" [routerLink]="getGroupSearchLink(data)" [style.background-image]="getSanitizedGifUrl(data)" 
-              [style.height]="getGifMinHeight(data)"></a>
-          <div class="desc">
-            <span class="description">{{data.group}}</span> 
-          </div>
-        </div>
-      </div>
+      <ng-masonry-grid *ngIf="groupDataList.length > 0"
+          [masonryOptions]="{ transitionDuration: '0s', gutter: 10 }"
+          [useAnimation]="false"
+          [useImagesLoaded]="false"
+          [scrollAnimationOptions]="{ animationEffect: 'effect-0', minDuration : 0, maxDuration : 0 }"
+          infiniteScroll
+          [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups()">
+        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of groupDataList;let i = index;">
+          <a class="img" [routerLink]="getGroupSearchLink(data)" [style.background-image]="getSanitizedGifUrl(data)"
+            [style.height]="getGifMinHeight(data)">
+            <div class="desc">
+              <span class="description">{{data.group}}</span>
+            </div>
+          </a>
+        </ng-masonry-grid-item>
+      </ng-masonry-grid>
 
       <app-infinite-component *ngIf="showGroupData" [dataList]="categoryGroupSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
 

@@ -2,6 +2,7 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgMasonryGridModule } from 'ng-masonry-grid';
 
 import { AppComponent } from './app.component';
 import { NetworkService } from './commons/services/network-service';
@@ -33,6 +34,7 @@ import { UtilityService } from './commons/services/utility.service';
   ],
   imports: [
     CommonModule,
+    NgMasonryGridModule,
     NgtUniversalModule,
     FormsModule,
     HttpModule,

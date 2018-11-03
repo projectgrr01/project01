@@ -4,17 +4,24 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
     selector: 'app-infinite-component',
     template: `
-            <div id="columns" class="cards-wrap" infiniteScroll
-                [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="dataScrolled()">
-                <div class="card cardx" *ngFor="let data of dataList" [style.height]="getGifMinHeightCover(data)">
+            <ng-masonry-grid
+                    [masonryOptions]="{ transitionDuration: '0s', gutter: 10 }"
+                    [useAnimation]="false"
+                    [useImagesLoaded]="true"
+                    [scrollAnimationOptions]="{ animationEffect: 'effect-0', minDuration : 0, maxDuration : 0 }"
+                    infiniteScroll
+                    [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="dataScrolled()">
+                <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of dataList;let i = index;">
                     <a class="img" [attr.href]="getEscapedUrl(data)" [style.background-image]="getSanitizedGifUrl(data)"
                         [style.height]="getGifMinHeight(data)"></a>
                     <div class="inside">
                         <h3>{{data.category}} </h3>
                         <div class="description">{{data.group}} </div>
                     </div>
-                </div>
-            </div>`
+                </ng-masonry-grid-item>
+            </ng-masonry-grid>
+            `,
+        styleUrls: ['../../../../node_modules/ng-masonry-grid/ng-masonry-grid.css']
 })
 
 export class InfiniteComponent {

@@ -6,7 +6,8 @@ import { UtilityService } from '../../commons/services/utility.service';
 
 @Component({
     selector: 'app-search',
-    templateUrl: './search.component.html'
+    templateUrl: './search.component.html',
+    styleUrls: ['../../../../node_modules/ng-masonry-grid/ng-masonry-grid.css']
 })
 
 export class SearchComponent implements OnInit, OnDestroy {
