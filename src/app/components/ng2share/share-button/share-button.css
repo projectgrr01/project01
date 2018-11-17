@@ -5,12 +5,13 @@ a{
   font-size: 1.8rem;
 }
 .n2s-share-btn{
-  height: 30px;
-  width: 30px;
+  height: 35px;
+  width: 35px;
   font-size:24px;
   cursor:pointer;
   color:#eee;
-  border-radius: 2px;
+  border-radius: 0px;
+  margin: 0 3px;
   /*center icons*/
   display: flex;
   justify-content: center;
@@ -41,7 +42,7 @@ a{
   font-size: 14px;
   font-family: helvetica;
 }
-/*.n2s-share-btn-facebook{
+.n2s-share-btn-facebook{
   background:#2d609b;
 }
 .n2s-share-btn-twitter{
@@ -69,4 +70,4 @@ a{
 }
 .n2s-share-btn-mail{
   background:#ff2e40;
-}*/
+}

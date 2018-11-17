@@ -8,12 +8,19 @@ declare var $: any;
     selector: 'app-header',
     template: `<div class="header">
             <div class="container">
-                <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/logo.png"  style="width:80px" /> </a> </div>
+                <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/gifkarologo.png" /> </a> </div>
+                <div class="logo right" style="
+                ">
+                <a href="#"><img src="/assets/images/plus_128x128.png"></a>
+                <a href="#"><img src="/assets/images/contact_128x128.png"></a>
+                <a href="#"><img src="/assets/images/line_ver_01.png">
+                </a>
+                </div>
                 <div class="search">
                     <input type="search" name="search" placeholder="Search Gif's"
                         [(ngModel)]="searchkey" (keyup.enter)="clickSearchBtn()" />
                     <a #searchBtn class="searchBtn" [routerLink]="'/search-result/' + searchkey">
-                        <i class="fa fa-search" aria-hidden="true"></i></a>
+                        <img src="/assets/images/search_128x128.png"></a>
                 </div>
             </div>
             <!--nav-->

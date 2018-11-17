@@ -9,7 +9,7 @@ export const environment = {
   siteRootUrl: 'http://gifkaro.com/',
   defaultLanguage: 'english',
   defaultCategory: 'trends',
-  sizeOfChunk: 20,
+  sizeOfChunk: 2,
   pathNames : {
     embedImg: 'embed/img/',
     embedMp4: 'embed/mp4/',

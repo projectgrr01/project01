@@ -11,7 +11,10 @@
         </a>
         <div class="bottom_Area"> 
             <span class="pull-left ng-binding">Category : {{imageData.category}} | Group : {{imageData.group}}</span> 
-            <span class="pull-right socialShare"> Share it : 
+            <br/>
+            <div class="social-share-container">
+                <!--span><a href="whatsapp://send?text={{shortenUrl}}" data-action="share/whatsapp/share">W</a></span-->
+                <span class="socialShare"> 
                     <share-container
                         direction="horizontal"
                         addedText=""
@@ -19,10 +22,11 @@
                         [textEnabled]="false"
                         [platforms]="['facebook','twitter','pinterest']">
                     </share-container>
-            </span>
+                </span>
+            </div>
         </div>
     </div>
-    <div class="col-md-3 sidebarLeft">
+    <!--div class="col-md-3 sidebarLeft">
         <h3 class="ng-binding">{{imageData.category}} / {{imageData.group}}</h3>
         <div class="social">
             <h4>Share it! :</h4>
@@ -36,8 +40,8 @@
         </div>
         <div class="tags"><i class="fa fa-code" aria-hidden="true"></i> <a data-toggle="modal" data-target="#embed">Image Embed Code</a> </div>
         <div class="tags"><i class="fa fa-link" aria-hidden="true"></i> <a data-toggle="modal" data-target="#copyLink">Copy Link</a> </div>
-    </div>
-    <div class="col-md-9 rightContent">
+    </div-->
+    <div class="col-md-12 rightContent">
         <!--related -->
         <div class="relatedData">
         <div class="headerTitle">

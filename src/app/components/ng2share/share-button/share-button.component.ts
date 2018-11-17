@@ -21,7 +21,7 @@ import { Properties } from '../properties.utils'
               </div>
             </a>
             `,
-  styleUrls:['./share-button.css']
+  styleUrls: ['./share-button.css']
 })
 export class ShareButtonComponent implements OnInit{
   @Input() platformName;
