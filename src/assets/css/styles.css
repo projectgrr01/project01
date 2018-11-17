@@ -288,12 +288,27 @@ width: 150px;
 	margin-right: -6px;
 }
 .rightContent {
-	padding:20px 0;
+	padding:0;
 }
 .imageArea {
 	min-height:250px;
 	max-height:600px;
 	height:100%;
+    text-align: center;
+}
+.imageArea img {
+	vertical-align: middle;
+	padding: 10px;
+	max-width: 100%;
+}
+@media (min-width: 992px) {
+	.imageArea{
+		width: 75%;
+    	float: right;
+	}
+	.rightContent {
+		float: right;
+	}
 }
 .rightContent .mainImg {
 	width:100%;
@@ -645,15 +660,30 @@ opacity: 1;
 	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 		width: 350px !important;
 	}
+	ng-masonry-grid.grid {
+		width: 710px;
+	}
 }
 @media (min-width: 992px) {
 	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 		width: 305px !important;
 	}
+	ng-masonry-grid.grid {
+		width: 935px;
+	}
+	.rightContent ng-masonry-grid.grid {
+		width: 620px;
+	}
 }
 @media (min-width: 1200px) {
 	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 		width: 370px !important;
+	}
+	ng-masonry-grid.grid {
+		width: 1130px;
+	}
+	.rightContent ng-masonry-grid.grid {
+		width: 750px;
 	}
 }
 a.img {

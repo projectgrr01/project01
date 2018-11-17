@@ -1,4 +1,27 @@
 <div class="container">
+    <div class="imageArea"> 
+        <a *ngIf="imageData" class="mainImg ng-scope"> 
+            <img [src]="getSanitizedGifSrcUrl(imageData)" style="min-width:300px;" [alt]="getSanitizedGifPageUrl(imageData)">
+            <!--loading-->
+            <div class="loading loading-more-indicator" *ngIf="showLoader">
+              <div class="lds-ripple"><span></span><span></span><span></span></div>
+            </div>
+            <!--// loading-->
+            <div class="clearfix"></div>
+        </a>
+        <div class="bottom_Area"> 
+            <span class="pull-left ng-binding">Category : {{imageData.category}} | Group : {{imageData.group}}</span> 
+            <span class="pull-right socialShare"> Share it : 
+                    <share-container
+                        direction="horizontal"
+                        addedText=""
+                        [expandable]="false"
+                        [textEnabled]="false"
+                        [platforms]="['facebook','twitter','pinterest']">
+                    </share-container>
+            </span>
+        </div>
+    </div>
     <div class="col-md-3 sidebarLeft">
         <h3 class="ng-binding">{{imageData.category}} / {{imageData.group}}</h3>
         <div class="social">
@@ -15,29 +38,6 @@
         <div class="tags"><i class="fa fa-link" aria-hidden="true"></i> <a data-toggle="modal" data-target="#copyLink">Copy Link</a> </div>
     </div>
     <div class="col-md-9 rightContent">
-        <div class="imageArea"> 
-            <a *ngIf="imageData" class="mainImg ng-scope"> 
-                <img [src]="getSanitizedGifSrcUrl(imageData)" style="min-width:300px;" [alt]="getSanitizedGifPageUrl(imageData)">
-                <!--loading-->
-                <div class="loading loading-more-indicator" *ngIf="showLoader">
-                  <div class="lds-ripple"><span></span><span></span><span></span></div>
-                </div>
-                <!--// loading-->
-                <div class="clearfix"></div>
-            </a>
-            <div class="bottom_Area"> 
-                <span class="pull-left ng-binding">Category : {{imageData.category}} | Group : {{imageData.group}}</span> 
-                <span class="pull-right socialShare"> Share it : 
-                        <share-container
-                            direction="horizontal"
-                            addedText=""
-                            [expandable]="false"
-                            [textEnabled]="false"
-                            [platforms]="['facebook','twitter','pinterest']">
-                        </share-container>
-                </span>
-            </div>
-        </div>
         <!--related -->
         <div class="relatedData">
         <div class="headerTitle">
