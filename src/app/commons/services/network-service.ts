@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions } from '@angular/http';
+import { Http, Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,8 +15,7 @@ const subUrls: any = {
 export class NetworkService {
 
     constructor (private http: Http,
-                private utility: UtilityService) {
-     }
+                private utility: UtilityService) {}
 
     public getMenuCategories(): Observable<any> {
         return this.http.get(this.utility.baseApiUrl + subUrls.CATEGORYURL)
@@ -50,6 +49,12 @@ export class NetworkService {
     public getGifDataByUid(gifId: string): Observable<any> {
         return this.http.get(this.utility.baseApiUrl + gifId)
             .pipe(map(data => data.json()));
+    }
+
+    public getBlobDataFromUrl(url: string) {
+        let options = new RequestOptions({responseType: ResponseContentType.Blob });
+        return this.http.get(url, options)
+            .pipe(map(data => data.blob()));
     }
 
     public getTagSearchData(tag: string, pageNumber: number, size: number): Observable<any> {

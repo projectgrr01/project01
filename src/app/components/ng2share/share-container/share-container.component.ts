@@ -5,6 +5,9 @@ import { Component, Input, OnInit, ViewEncapsulation}
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Properties } from '../properties.utils'
 import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import {saveAs as importedSaveAs} from 'file-saver';
+import { NetworkService } from '../../../commons/services/network-service';
 
 @Component({
   selector: 'share-container',
@@ -41,20 +44,24 @@ export class ShareContainerComponent implements OnInit {
   // So in case you need this the input should be like the following object (you can omitt some fields)
   // {title:'my title', description:'my desc',img:' an image', via:'Ced_VDB', hashtags:'someHashTag'}
   @Input() properties: Properties = {};
-  @Input() shortenUrl: String = '';
+  @Input() gifUrl: String = '';
   // horizontal layout or vertical layout (_accessed via getter & setter)
   _direction: String = 'horizontal';
   // state of the secondary platform expandable pannel
   expandedState: String = 'collapsed';
 
-  constructor(@Inject(WINDOW) private window: Window, private sanitization: DomSanitizer) {}
+  public downloadIcon = 'download.png';
+
+  constructor(@Inject(WINDOW) private window: Window,
+              private sanitization: DomSanitizer,
+              private network: NetworkService) {}
 
 
   ngOnInit(){
     this.fetchProperties();
   }
   expand(){
-    this.expandedState = (this.expandedState == 'collapsed' ? 'expanded' : 'collapsed');
+    this.expandedState = (this.expandedState === 'collapsed' ? 'expanded' : 'collapsed');
   }
   fetchProperties(){
     this.properties.url = this.properties.url || this.getMetaContent('og:url') || this.window.location.href.toString();
@@ -63,7 +70,7 @@ export class ShareContainerComponent implements OnInit {
     this.properties.image = this.properties.image || this.getMetaContent('og:image');
     this.properties.via = this.properties.via || this.getMetaContent('n2s:via');
     this.properties.hashtags = this.properties.hashtags || this.getMetaContent('n2s:hashtags');
-    for(let p in this.properties){
+    for(let p in this.properties) {
       if (this.properties.hasOwnProperty(p)) {
           this.properties[p] = encodeURIComponent(this.properties[p]);
       }
@@ -71,28 +78,39 @@ export class ShareContainerComponent implements OnInit {
   }
   getMetaContent(property: string) {
     let elem = document.querySelector(`meta[property='${property}']`);
-    if(elem)
-      return elem.getAttribute("content");
-    return "";
+    if (elem) {
+      return elem.getAttribute('content');
+    }
+    return '';
   }
   // safe check to prevent missuses
   @Input()
-  set direction(direction){
-    if(direction === 'vertical')
+  set direction(direction) {
+    if (direction === 'vertical') {
       this._direction = direction;
-    else
+    } else {
       this._direction = 'horizontal';
+    }
   }
 
-  get direction(){
+  get direction() {
     return this._direction;
   }
 
+  public downloadFile(): void {
+    this.downloadIcon = 'loading.gif';
+    this.network.getBlobDataFromUrl(this.gifUrl.toString()).subscribe(blob => {
+          importedSaveAs(blob, 'gifkaro_gif');
+          this.downloadIcon = 'download.png';
+      }
+    );
+  }
+
   public getWhatsappShareableUrl() {
-    return this.sanitization.bypassSecurityTrustResourceUrl('https://api.whatsapp.com/send?text=' + this.shortenUrl);
+    return this.sanitization.bypassSecurityTrustResourceUrl('https://api.whatsapp.com/send?text=' + this.gifUrl);
   }
 
   public getDownloadableUrl() {
-    return this.sanitization.bypassSecurityTrustResourceUrl(this.shortenUrl.toString());
+    return this.sanitization.bypassSecurityTrustResourceUrl(this.gifUrl.toString());
   }
 }

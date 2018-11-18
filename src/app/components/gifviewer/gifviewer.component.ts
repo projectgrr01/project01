@@ -80,8 +80,15 @@ export class GifviewerComponent implements OnInit, OnDestroy {
         }
         return this.sanitization.bypassSecurityTrustUrl('/gifs/' + data.giftuid);
     }
+    public getGifUrl(data: any) {
+        console.log(data);
+        if (!data || data.category === '') {
+            return '';
+        }
+        return (data.media.gif.actual.url);
+    }
     public getSanitizedGifSrcUrl(data: any) {
-        if (data.category === '') {
+        if (!data || data.category === '') {
             return '';
         }
         return this.sanitization.bypassSecurityTrustResourceUrl(data.media.gif.actual.url);
