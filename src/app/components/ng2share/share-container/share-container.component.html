@@ -1,4 +1,7 @@
 <div class="n2s-shareContainer n2s-{{direction}}">
+  <span class="custom-share-btn"><a [href]="getWhatsappShareableUrl()" target="_blank" data-action="share/whatsapp/share">
+    <img style="padding: 0px;" src="/assets/images/whatsapp.png"></a>
+  </span>
   <!-- Primary share platforms-->
   <share-button *ngFor="let platform of platforms"
                    [platformName]="platform"
@@ -24,6 +27,7 @@
       {{expandedState == 'collapsed' ? '+' : '-'}}
     </div>
   </div>
+  <span class="custom-share-btn"><a [href]="getDownloadableUrl()" download><img style="padding: 0px;" src="/assets/images/download.png"></a></span>
   <span class="custom-share-btn"><a data-toggle="modal" data-target="#embed"><img src="/assets/images/emmbeded.png"></a> </span>
   <span class="custom-share-btn"><a data-toggle="modal" data-target="#copyLink"><img src="/assets/images/link.png"></a> </span>
 </div>

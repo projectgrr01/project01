@@ -297,7 +297,7 @@ width: 150px;
 	padding:0;
 }
 .imageArea {
-	min-height:250px;
+	/*min-height:250px;*/
 	max-height:600px;
 	height:100%;
     text-align: center;
