@@ -302,9 +302,26 @@ width: 150px;
 	height:100%;
     text-align: center;
 }
+.imageArea .loading {
+	height: 60px;
+    margin-top: 10px;
+}
+.imageArea figure {
+	position: relative;
+	padding: 10px;
+    margin-top: -70px;
+}
+.imageArea figcaption {
+    color: #fff;
+    padding-bottom: 10px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+	width: 100%;
+	font-size: 16px;
+}
 .imageArea img {
 	vertical-align: middle;
-	padding: 10px;
 	max-width: 100%;
 }
 .rightContent .mainImg {
@@ -417,11 +434,8 @@ width: 150px;
 	outline:none;
 }
 .bottom_Area {
-	font-size:16px;
-	/*padding:10px;*/
-	/*background:#333;*/
+	font-size:13px;
 	color:#FFF;
-	/*height:40px;*/
 }
 /* Prevent vertical gaps */
 .contents {
@@ -504,11 +518,13 @@ md-content {
   max-height: 400px;
 }
 
-.cardx:nth-child(1n){ background:#FBD295;}
-.cardx:nth-child(2n){ background:#D6EDF8;}
-.cardx:nth-child(3n){ background:#EDDAC9;}
-.cardx:nth-child(4n){ background:#B5DBB7;}
-.cardx:nth-child(5n){ background:#EAB4F5;}
+.cardx:nth-child(1n){ background:#69C802;}
+.cardx:nth-child(2n){ background:#66E0FF;}
+.cardx:nth-child(3n){ background:#FDBD83;}
+.cardx:nth-child(4n){ background:#C257FF;}
+.cardx:nth-child(5n){ background:#FEAC2E;}
+.cardx:nth-child(6n){ background:#E04CFB;}
+.cardx:nth-child(7n){ background:#94FF97;}
 
 .card.angular-grid-item {
   opacity: 1;
@@ -532,8 +548,12 @@ md-content {
 }
 .cardz{ min-height:70vh;}
 .cardx .inside h3 {
-  margin-top: 0;
-  font-size:18px;
+	margin-top: 0;
+    font-size: 17px;
+    font-family: roboto;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: bold;
 }
 
 .cardx .inside a {
@@ -573,95 +593,19 @@ md-content {
 }
 
 .cardx .inside .description {
-  font-size: 14px;
-  line-height: 1.3;
-  color: #555; margin-top: 3px;
+	font-size: 14px;
+	line-height: 1.3;
+	margin-top: 3px;
+	font-family: roboto;
+    text-transform: capitalize;
+    color: #fff;
 }
-
-/*.cards-wrap {
-  margin: 32px 0;
-  padding-bottom: 64px;
-  position: relative;
-  line-height: 0px;
-  -webkit-column-count: 5;
-  -webkit-column-gap:   10px;
-  -moz-column-count:    5;
-  -moz-column-gap:      10px;
-  column-count:         5;
-  column-gap:           10px;
-  
+.grid[_ngcontent-c1] ng-masonry-grid-item[_ngcontent-c1] {
+	width: 100%;
 }
-@media (max-width: 1200px) {
-	.cards-wrap {
-	-moz-column-count:    4;
-	-webkit-column-count: 4;
-	column-count:         4;
-	}
-  }
-  @media (max-width: 1000px) {
-	.cards-wrap {
-	-moz-column-count:    3;
-	-webkit-column-count: 3;
-	column-count:         3;
-	}
-  }
-  @media (max-width: 800px) {
-	.cards-wrap {
-	-moz-column-count:    2;
-	-webkit-column-count: 2;
-	column-count:         2;
-	}
-  }
-  @media (max-width: 400px) {
-	.cards-wrap {
-	-moz-column-count:    1;
-	-webkit-column-count: 1;
-	column-count:         1;
-	}
-  }
-
-.loading-more-indicator {
-  text-align: center;
+ng-masonry-grid.grid {
+	width: 100%;
 }
-
-.loading-more-indicator md-progress-circular {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  display: inline-block;
-}
-
-.dynamic-grid{
-position: relative;
-display: none;
-}
-
-.dynamic-grid.angular-grid{
-display: block;
-overflow: hidden;
-}
-
-.grid {
-position: absolute;
-list-style: none;
--moz-box-sizing : border-box;
--webkit-transition: all 0.6s ease-out;
-transition: all 0.6s ease-out;
-overflow: hidden;
-background-size:30px 30px !important;
-}
-.grid-img {
-width: 100%;
-vertical-align: middle;
--webkit-transition: opacity 0.6s ease-out;
-transition: opacity 0.6s ease-out;
-opacity: 0;
-visibility: hidden;
-}
-
-.grid-img.img-loaded{
-visibility: visible;
-opacity: 1;
-}*/
 @media (min-width: 768px) {
 	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 		width: 350px !important;
@@ -677,9 +621,6 @@ opacity: 1;
 	ng-masonry-grid.grid {
 		width: 935px;
 	}
-	/*.rightContent ng-masonry-grid.grid {
-		width: 620px;
-	}*/
 }
 @media (min-width: 1200px) {
 	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
@@ -688,13 +629,11 @@ opacity: 1;
 	ng-masonry-grid.grid {
 		width: 1130px;
 	}
-	/*.rightContent ng-masonry-grid.grid {
-		width: 750px;
-	}*/
 }
 a.img {
 	background-repeat: no-repeat;
-    background-size: cover;
+	background-size: cover;
+	background-position: center;
 }
 
 .img img {

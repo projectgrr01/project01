@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="dataScrolled()">
                 <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of dataList;let i = index;">
-                    <a class="img" [attr.href]="getEscapedUrl(data)" [style.background-image]="getSanitizedGifUrl(data)"
+                    <a class="img" routerLink="{{getEscapedUrl(data)}}" [style.background-image]="getSanitizedGifUrl(data)"
                         [style.height]="getGifMinHeight(data)"></a>
                     <div class="inside">
                         <h3>{{data.category}} </h3>
