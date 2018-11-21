@@ -9,12 +9,10 @@ declare var $: any;
     template: `<div class="header">
             <div class="container">
                 <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/gifkarologo.png" /> </a> </div>
-                <div class="logo right" style="
-                ">
-                <a href="#"><img src="/assets/images/plus_128x128.png"></a>
-                <a href="#"><img src="/assets/images/contact_128x128.png"></a>
-                <a href="#"><img src="/assets/images/line_ver_01.png">
-                </a>
+                <div class="logo right">
+                    <div><img src="/assets/images/plus_128x128.png"></div>
+                    <div><img src="/assets/images/contact_128x128.png"></div>
+                    <div (click)="toggleSettings()"><img src="/assets/images/{{settingImage}}"></div>
                 </div>
                 <div class="search">
                     <input type="search" name="search" placeholder="Search Gif's"
@@ -23,22 +21,23 @@ declare var $: any;
                         <img src="/assets/images/search_128x128.png"></a>
                 </div>
             </div>
+            <app-setting *ngIf="settingImage == 'cross_128x128.png'" (languageSelected)="toggleSettings()"></app-setting>
             <!--nav-->
             <div class="tops-nav" >
             <div class="container">
                 <div class="menux">
-                <ul class="menu flex">
-                    <li #categoryItems *ngFor="let category of categories">
-                    <a [routerLink]="getSearchUrl(category)" routerLinkActive="router-link-active"
-                        [innerHTML]="getCategoryText(category)"></a>
-                    </li>
-                </ul>
-                <div class="clearfix"> </div>
+                    <ul class="menu flex">
+                        <li #categoryItems *ngFor="let category of categories">
+                            <a [routerLink]="getSearchUrl(category)" routerLinkActive="router-link-active"
+                                [innerHTML]="getCategoryText(category)"></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"> </div>
                 </div>
             </div>
             <!--// nav-->
-            </div>
-        </div>`
+        </div>
+    </div>`
 })
 
 export class HeaderComponent implements OnInit, AfterViewInit {
@@ -48,6 +47,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     categories: any[] = [];
     public searchkey = '';
+    private settingImage = 'line_ver_01.png';
 
     constructor(private network: NetworkService,
                 private utility: UtilityService) {}
@@ -76,6 +76,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     public clickSearchBtn() {
         this.searchBtn.nativeElement.click();
+    }
+
+    private toggleSettings() {
+        this.settingImage = this.settingImage === 'line_ver_01.png' ? 'cross_128x128.png' : 'line_ver_01.png'; 
     }
 
     public getSearchUrl(category: String): String {

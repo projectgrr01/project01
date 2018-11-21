@@ -55,6 +55,9 @@ body {
 	width: 30%;
 	max-width: 100px;
 }
+.logo.right div {
+	cursor: pointer;
+}
 .logo img {
     height: 20px;
 }
@@ -600,31 +603,32 @@ md-content {
     text-transform: capitalize;
     color: #fff;
 }
-.grid[_ngcontent-c1] ng-masonry-grid-item[_ngcontent-c1] {
+#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx,
+.relatedData ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 	width: 100%;
 }
 ng-masonry-grid.grid {
 	width: 100%;
 }
 @media (min-width: 768px) {
-	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 350px !important;
+	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 350px;
 	}
 	ng-masonry-grid.grid {
 		width: 710px;
 	}
 }
 @media (min-width: 992px) {
-	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 305px !important;
+	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 305px;
 	}
 	ng-masonry-grid.grid {
 		width: 935px;
 	}
 }
 @media (min-width: 1200px) {
-	ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 370px !important;
+	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		width: 370px;
 	}
 	ng-masonry-grid.grid {
 		width: 1130px;
@@ -646,3 +650,41 @@ textarea {
     resize: none;
 }
 
+app-setting {
+	position: absolute;
+    top: 40px;
+    background: #00d062;
+    width: 100%;
+    z-index: 10;
+}
+
+.up-pointer {
+	width: 0;
+    height: 0;
+    right: 18px;
+    border-bottom: 7px solid #0a5d91;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    top: -7px;
+}
+
+app-setting h3 {
+	font-weight: bold;
+    padding: 20px 20px 10px;
+    color: white;
+}
+app-setting ul.languages{
+	list-style-type: none;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+    columns: 2;
+	list-style-position: inside;
+	color: #FFFFFF;
+	margin-bottom: 20px;
+}
+app-setting ul.languages li {
+	padding: 5px 20px;
+    font-size: 15px;
+    cursor: pointer;
+}

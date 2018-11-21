@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchTagResultComponent } from './components/search-result/search-result.component';
 import { FormsModule } from '@angular/forms';
 import { UtilityService } from './commons/services/utility.service';
+import { SettingComponent } from './components/setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { UtilityService } from './commons/services/utility.service';
     SearchComponent,
     GifviewerComponent,
     SearchTagResultComponent,
+    SettingComponent,
     InfiniteComponent
   ],
   imports: [
