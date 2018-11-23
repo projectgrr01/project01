@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.searchBtn.nativeElement.click();
     }
 
-    private toggleSettings() {
+    public toggleSettings() {
         this.settingImage = this.settingImage === 'line_ver_01.png' ? 'cross_128x128.png' : 'line_ver_01.png'; 
     }
 
