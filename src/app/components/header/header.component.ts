@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     categories: any[] = [];
     public searchkey = '';
-    private settingImage = 'line_ver_01.png';
+    public settingImage = 'line_ver_01.png';
 
     constructor(private network: NetworkService,
                 private utility: UtilityService) {}
