@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { NetworkService } from '../../commons/services/network-service';
 import { UtilityService } from '../../commons/services/utility.service';
+import { environment } from '../../../environments/environment';
 
 declare var $: any;
 
@@ -21,7 +22,7 @@ declare var $: any;
                         <img src="/assets/images/search_128x128.png"></a>
                 </div>
             </div>
-            <app-setting *ngIf="settingImage == 'cross_128x128.png'" (languageSelected)="toggleSettings()"></app-setting>
+            <app-setting *ngIf="settingImage == 'cross_128x128.png'" (languageSelected)="changeLanguage($event)"></app-setting>
             <!--nav-->
             <div class="tops-nav" >
             <div class="container">
@@ -53,14 +54,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
                 private utility: UtilityService) {}
 
     ngOnInit(): void {
-        this.network.getMenuCategories().subscribe(response => {
-            this.categories = response.categories;
-        });
+        this.getCategoryItems();
     }
 
     ngAfterViewInit() {
         this.categoryItems.changes.subscribe(t => {
           this.categoryItemsRendred();
+        });
+    }
+
+    public getCategoryItems() {
+        this.network.getMenuCategories().subscribe(response => {
+            this.categories = response.categories;
         });
     }
 
@@ -78,11 +83,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.searchBtn.nativeElement.click();
     }
 
+    public changeLanguage(lang: string) {
+        if (environment.supportedLanguages.indexOf(lang) > -1) {
+            localStorage['lang'] = lang;
+            this.utility.language = lang;
+            this.toggleSettings();
+            this.getCategoryItems();
+        } else {
+            console.log('Unsupported language');
+        }
+    }
+
     public toggleSettings() {
-        this.settingImage = this.settingImage === 'line_ver_01.png' ? 'cross_128x128.png' : 'line_ver_01.png'; 
+        this.settingImage = this.settingImage === 'line_ver_01.png' ? 'cross_128x128.png' : 'line_ver_01.png';
     }
 
     public getSearchUrl(category: String): String {
-        return '/search/' + category[this.utility.language].replace(' ', '-');
+        try {
+            return '/search/' + category[environment.defaultLanguage].replace(' ', '-');
+        } catch (e) {}
     }
 }

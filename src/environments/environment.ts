@@ -14,7 +14,9 @@ export const environment = {
     embedImg: 'embed/img/',
     embedMp4: 'embed/mp4/',
     embedWebm: 'embed/webm/'
-  }
+  },
+  supportedLanguages: ['english', 'telugu', 'tamil', 'punjabi', 'marathi', 'malayalam',
+                      'kannada', 'gujarati', 'bengali', 'hindi']
 };
 
 /*

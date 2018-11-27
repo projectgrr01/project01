@@ -18,13 +18,14 @@ export class NetworkService {
                 private utility: UtilityService) {}
 
     public getMenuCategories(): Observable<any> {
-        return this.http.get(this.utility.baseApiUrl + subUrls.CATEGORYURL)
+        return this.http.get(this.utility.baseApiUrl + subUrls.CATEGORYURL + '?lang=' + this.utility.language)
             .pipe(map(data => data.json()));
     }
 
     public getTrendingData(pageNumber: number): Observable<any> {
         /*coundn't use URLSearchParams due to SEO visibility*/
-        let params = '?page=' + pageNumber.toString() + '&size=' + environment.sizeOfChunk.toString();
+        let params = '?page=' + pageNumber.toString() + '&size=' + environment.sizeOfChunk.toString()
+                    + '&lang=' + this.utility.language;
         return this.http.get(this.utility.baseApiUrl + environment.defaultCategory + params)
             .pipe(map(data => data.json()));
     }
@@ -47,7 +48,7 @@ export class NetworkService {
     }
 
     public getGifDataByUid(gifId: string): Observable<any> {
-        return this.http.get(this.utility.baseApiUrl + gifId)
+        return this.http.get(this.utility.baseApiUrl + gifId + '?lang=' + this.utility.language)
             .pipe(map(data => data.json()));
     }
 
@@ -58,13 +59,15 @@ export class NetworkService {
     }
 
     public getTagSearchData(tag: string, pageNumber: number, size: number): Observable<any> {
-        let options = '?tags=' + tag + '&page=' + pageNumber.toString() + '&size=' + size.toString();
+        let options = '?tags=' + tag + '&page=' + pageNumber.toString() + '&size=' + size.toString()
+                        + '&lang=' + this.utility.language;
         return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH + options)
             .pipe(map(data => data.json()));
     }
 
     private getCategoryGroupSearchData(category: string, group: string, pageNumber: number, size: number): Observable<any> {
-        let options = '?category=' + category + '&group=' + group + '&page=' + pageNumber.toString() + '&size=' + size.toString();
+        let options = '?category=' + category + '&group=' + group + '&page=' + pageNumber.toString() + '&size=' + size.toString()
+                        + '&lang=' + this.utility.language;
         return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH + options)
             .pipe(map(data => data.json()));
     }

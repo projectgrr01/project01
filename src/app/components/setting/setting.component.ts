@@ -7,13 +7,15 @@ import { Component, Output, EventEmitter } from '@angular/core';
         <h3>Languages</h3>
         <ul class="languages" data-columns="2">
             <li (click)="selectLanguage('hindi')">Hindi</li>
-            <li (click)="selectLanguage('English')">English</li>
+            <li (click)="selectLanguage('english')">English</li>
             <li (click)="selectLanguage('marathi')">Marathi</li>
             <li (click)="selectLanguage('punjabi')">Punjabi</li>
-            <li (click)="selectLanguage('bangali')">Bangali</li>
-            <li (click)="selectLanguage('kannad')">Kannad</li>
-            <li (click)="selectLanguage('gurjati')">Gujrati</li>
+            <li (click)="selectLanguage('bengali')">Bangali</li>
+            <li (click)="selectLanguage('kannada')">Kannada</li>
+            <li (click)="selectLanguage('gujarati')">Gujarati</li>
             <li (click)="selectLanguage('telugu')">Telugu</li>
+            <li (click)="selectLanguage('malayalam')">Malayalam</li>
+            <li (click)="selectLanguage('tamil')">Tamil</li>
         </ul>
     `
 })
@@ -24,7 +26,7 @@ export class SettingComponent {
 
     public selectLanguage(language: string) {
         console.log(language);
-        this.languageSelected.emit('language_selected');
+        this.languageSelected.emit(language);
     }
 
 }

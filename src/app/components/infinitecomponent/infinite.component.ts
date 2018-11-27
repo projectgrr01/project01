@@ -15,8 +15,8 @@ import { DomSanitizer } from '@angular/platform-browser';
                     <a class="img" routerLink="{{getEscapedUrl(data)}}" [style.background-image]="getSanitizedGifUrl(data)"
                         [style.height]="getGifMinHeight(data)"></a>
                     <div class="inside">
-                        <h3>{{data.category}} </h3>
-                        <div class="description">{{data.group}} </div>
+                        <h3>{{getCategory(data)}} </h3>
+                        <div class="description">{{getGroup(data)}} </div>
                     </div>
                 </ng-masonry-grid-item>
             </ng-masonry-grid>
@@ -39,6 +39,12 @@ export class InfiniteComponent {
     }
     public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
+    }
+    public getCategory(data: any): string {
+        return data.category_loc ? data.category_loc : data.category;
+    }
+    public getGroup(data: any): string {
+        return data.group_loc ? data.group_loc : data.group;
     }
     public getSanitizedGifUrl(data: any) {
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.regular.url})`);

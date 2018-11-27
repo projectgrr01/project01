@@ -15,7 +15,7 @@
           <a class="img" [routerLink]="getGroupSearchLink(data)" [style.background-image]="getSanitizedGifUrl(data)"
             [style.height]="getGifMinHeight(data)">
             <div class="desc">
-              <span class="description">{{data.group}}</span>
+              <span class="description">{{getGroup(data)}}</span>
             </div>
           </a>
         </ng-masonry-grid-item>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UtilityService } from '../../commons/services/utility.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-search',
@@ -71,7 +72,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         let tempDataList = [];
         let totalReqCount = groups.length;
         for (let group of groups) {
-            this.netowrk.getCategoryGroupsCoverData(category, group[this.utility.language]).subscribe(response => {
+            this.netowrk.getCategoryGroupsCoverData(category, group[environment.defaultLanguage]).subscribe(response => {
                 if (response.content && response.content.length > 0) {
                     tempDataList.push(response.content[0]);
                 }
@@ -102,6 +103,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
     }
+
+    public getGroup(data: any): string {
+        return data.group_loc ? data.group_loc : data.group;
+    }
+
     public getSanitizedGifUrl(data: any) {
         return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
     }
