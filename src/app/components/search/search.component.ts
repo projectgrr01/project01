@@ -65,6 +65,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.netowrk.getCategoryGroupsSearchData(this.category, this.group, this.pageNumber).subscribe(response => {
             this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
             this.showLoader = false;
+            if (response.content.length > 0) {
+                this.category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
+                this.group = response.content[0].group_loc ? response.content[0].group_loc : this.group;
+            }
         });
     }
 
@@ -75,6 +79,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.netowrk.getCategoryGroupsCoverData(category, group[environment.defaultLanguage]).subscribe(response => {
                 if (response.content && response.content.length > 0) {
                     tempDataList.push(response.content[0]);
+                    this.category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
                 }
                 if (--totalReqCount === 0) {
                     this.groupDataList = this.groupDataList.concat(tempDataList);

@@ -68,6 +68,14 @@ export class GifviewerComponent implements OnInit, OnDestroy {
         return this.imageData.media.gif.actual.shorten;
     }
 
+    public getCategory(data: any): string {
+        return data.category_loc ? data.category_loc : data.category;
+    }
+
+    public getGroup(data: any): string {
+        return data.group_loc ? data.group_loc : data.group;
+    }
+
     public getSanitizedGifUrl(data: any) {
         if (data.category === '') {
             return '';

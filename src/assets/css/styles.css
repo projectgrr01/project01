@@ -306,7 +306,9 @@ width: 150px;
 	/*min-height:250px;*/
 	max-height:600px;
 	height:100%;
-    text-align: center;
+	text-align: center;
+	width: fit-content;
+    margin: auto;
 }
 .imageArea .loading {
 	height: 60px;
@@ -606,13 +608,13 @@ md-content {
     text-transform: capitalize;
     color: #fff;
 }
-#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx,
+/*#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx,
 .relatedData ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 	width: 100%;
 }
 ng-masonry-grid.grid {
 	width: 100%;
-}
+}*/
 @media (min-width: 768px) {
 	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
 		width: 350px;

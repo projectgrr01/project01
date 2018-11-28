@@ -15,9 +15,9 @@
         <div class="bottom_Area">
             <span class="pull-left">{{imageData.title}}</span> 
             <span class="pull-right">
-                <a routerLink="/search/{{imageData.category}}">#{{imageData.category}}</a>
+                <a routerLink="/search/{{imageData.category}}">#{{getCategory(imageData)}}</a>
                 &nbsp;&nbsp;
-                <a routerLink="/search-result/{{imageData.group}}">#{{imageData.group}}</a>
+                <a routerLink="/search-result/{{imageData.group}}">#{{getGroup(imageData)}}</a>
             </span> 
             <div class="clearfix"></div>
             <div class="social-share-container">
