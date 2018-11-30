@@ -656,17 +656,20 @@ textarea {
 }
 
 app-setting {
-	position: absolute;
-    top: 40px;
+	position: relative;
+	float: left;
+    top: -43px;
     background: #00d062;
     width: 100%;
     z-index: 10;
+	height: 100%;
+	margin-bottom: -100%
 }
 
 .up-pointer {
 	width: 0;
     height: 0;
-    right: 18px;
+    right: 4px;
     border-bottom: 7px solid #0a5d91;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;

@@ -21,8 +21,10 @@ declare var $: any;
                     <a #searchBtn class="searchBtn" [routerLink]="'/search-result/' + searchkey">
                         <img src="/assets/images/search_128x128.png"></a>
                 </div>
-            </div>
-            <app-setting *ngIf="settingImage == 'cross_128x128.png'" (languageSelected)="changeLanguage($event)"></app-setting>
+			</div>
+			<div class="container">
+				<app-setting *ngIf="settingImage == 'cross_128x128.png'" (languageSelected)="changeLanguage($event)"></app-setting>
+			</div>
             <!--nav-->
             <div class="tops-nav" >
             <div class="container">
