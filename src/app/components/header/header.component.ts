@@ -84,14 +84,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
 
     public changeLanguage(lang: string) {
-        if (environment.supportedLanguages.indexOf(lang) > -1) {
-            localStorage['lang'] = lang;
-            this.utility.language = lang;
-            this.toggleSettings();
-            this.getCategoryItems();
-        } else {
-            console.log('Unsupported language');
-        }
+    	try{
+        	if (environment.supportedLanguages.indexOf(lang) > -1) {
+        	    localStorage['lang'] = lang;
+        	    this.utility.language = lang;
+        	    this.toggleSettings();
+        	    this.getCategoryItems();
+        	} else {
+        	    console.log('Unsupported language');
+        	}
+		} catch (e){}
     }
 
     public toggleSettings() {

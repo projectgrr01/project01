@@ -7,8 +7,10 @@ export class UtilityService {
     private currentLanguage: string;
 
     constructor () {
-        this._baseApiUrl = environment.apiUrl;
-        this.currentLanguage = localStorage['lang'] ? localStorage['lang'] : environment.defaultLanguage;
+    	try{
+            this._baseApiUrl = environment.apiUrl;
+	    this.currentLanguage = localStorage['lang'] ? localStorage['lang'] : environment.defaultLanguage;
+	} catch(e){}
     }
 
     get language(): string {
