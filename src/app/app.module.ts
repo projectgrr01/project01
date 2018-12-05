@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
+import {MatDialogModule} from "@angular/material";
 
 import { AppComponent } from './app.component';
 import { NetworkService } from './commons/services/network-service';
@@ -21,6 +22,7 @@ import { SearchTagResultComponent } from './components/search-result/search-resu
 import { FormsModule } from '@angular/forms';
 import { UtilityService } from './commons/services/utility.service';
 import { SettingComponent } from './components/setting/setting.component';
+import { DialogComponent } from './components/header/DialogComponent';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { SettingComponent } from './components/setting/setting.component';
     GifviewerComponent,
     SearchTagResultComponent,
     SettingComponent,
-    InfiniteComponent
+    InfiniteComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
@@ -43,12 +46,15 @@ import { SettingComponent } from './components/setting/setting.component';
     routing,
     InfiniteScrollModule,
     ShareModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     NetworkService,
     UtilityService
-  ]
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
 
 export class AppModule { }

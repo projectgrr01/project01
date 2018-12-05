@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, ViewChild, E
 import { NetworkService } from '../../commons/services/network-service';
 import { UtilityService } from '../../commons/services/utility.service';
 import { environment } from '../../../environments/environment';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { DialogComponent } from './DialogComponent';
 
 declare var $: any;
 
@@ -11,8 +13,8 @@ declare var $: any;
             <div class="container">
                 <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/gifkarologo.png" /> </a> </div>
                 <div class="logo right">
-                    <div><img src="/assets/images/plus_128x128.png"></div>
-                    <div><img src="/assets/images/contact_128x128.png"></div>
+                    <div (click)="openDialog()"><img src="/assets/images/plus_128x128.png"></div>
+                    <div (click)="openDialog()"><img src="/assets/images/contact_128x128.png"></div>
                     <div (click)="toggleSettings()"><img src="/assets/images/{{settingImage}}"></div>
                 </div>
                 <div class="search">
@@ -53,7 +55,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     public settingImage = 'line_ver_01.png';
 
     constructor(private network: NetworkService,
-                private utility: UtilityService) {}
+                private utility: UtilityService,
+                private dialog: MatDialog) {}
 
     ngOnInit(): void {
         this.getCategoryItems();
@@ -96,6 +99,21 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         	    console.log('Unsupported language');
         	}
 		} catch (e){}
+    }
+    
+    public openDialog() {
+
+        return;
+        /*const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            id: 1,
+            description: 'Angular For Beginners'
+        };
+
+        this.dialog.open(DialogComponent, dialogConfig);*/
     }
 
     public toggleSettings() {

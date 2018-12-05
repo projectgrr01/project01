@@ -16,6 +16,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     public showLoader = true;
     public category: string;
     public group: string;
+    public display_category: string;
+    public display_group: string;
     public categoryGroupsList: string[];
     public currentGroupChunkStartIndex: number;
     public currentGroupChunkLength: number;
@@ -33,6 +35,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.routeSubscriber = this.route.params.subscribe(params => {
             this.category = params['category'];
             this.group = params['group'] || '';
+            this.display_category = this.group;
+            this.display_group = this.group;
             this.pageNumber = 0;
 
             this.categoryGroupsList = [];
@@ -66,8 +70,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
             this.showLoader = false;
             if (response.content.length > 0) {
-                this.category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
-                this.group = response.content[0].group_loc ? response.content[0].group_loc : this.group;
+                this.display_category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
+                this.display_group = response.content[0].group_loc ? response.content[0].group_loc : this.group;
             }
         });
     }
@@ -75,11 +79,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     private getCoverImageForGroupTile(category: string, groups: string[]) {
         let tempDataList = [];
         let totalReqCount = groups.length;
+        console.log("here1", category);
         for (let group of groups) {
             this.netowrk.getCategoryGroupsCoverData(category, group[environment.defaultLanguage]).subscribe(response => {
                 if (response.content && response.content.length > 0) {
                     tempDataList.push(response.content[0]);
-                    this.category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
+                    this.display_category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
                 }
                 if (--totalReqCount === 0) {
                     this.groupDataList = this.groupDataList.concat(tempDataList);
