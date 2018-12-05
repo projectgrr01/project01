@@ -615,25 +615,28 @@ md-content {
 ng-masonry-grid.grid {
 	width: 100%;
 }*/
-@media (min-width: 768px) {
+@media (min-width: 800px) {
+	/*3*/
 	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 350px;
+		width: 230px;
 	}
 	ng-masonry-grid.grid {
 		width: 710px;
 	}
 }
-@media (min-width: 992px) {
+@media (min-width: 1000px) {
+	/*4*/
 	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 305px;
+		width: 226px;
 	}
 	ng-masonry-grid.grid {
 		width: 935px;
 	}
 }
 @media (min-width: 1200px) {
+	/*5*/
 	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		width: 370px;
+		width: 218px;
 	}
 	ng-masonry-grid.grid {
 		width: 1130px;
@@ -643,6 +646,7 @@ a.img {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	max-height: 300px;
 }
 
 .img img {
