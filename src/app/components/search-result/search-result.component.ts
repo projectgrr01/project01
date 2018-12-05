@@ -36,8 +36,12 @@ export class SearchTagResultComponent implements OnInit, OnDestroy {
 
     private getSearchDataFortag() {
         this.showLoader = true;
-        this.tagSearchDataList = [];
-        this.netowrk.getTagsSearchData(this.tag, this.pageNumber).subscribe(response => {
+        var _tag = this.tag;
+        if (_tag.indexOf(' ') > -1){
+            _tag = this.tag.split(' ').join(',');
+            _tag += ',' + this.tag;
+        }
+        this.netowrk.getTagsSearchData(_tag, this.pageNumber).subscribe(response => {
             this.tagSearchDataList = this.tagSearchDataList.concat(response.content);
             this.showLoader = false;
         });
