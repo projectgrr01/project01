@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     selector: 'app-infinite-component',
     template: `
             <ng-masonry-grid
-                    [masonryOptions]="{ transitionDuration: '0s', gutter: 10 }"
+                    [masonryOptions]="{ transitionDuration: '0s', gutter: 10, horizontalOrder: true }"
                     [useAnimation]="false"
                     [useImagesLoaded]="true"
                     [scrollAnimationOptions]="{ animationEffect: 'effect-0', minDuration : 0, maxDuration : 0 }"
