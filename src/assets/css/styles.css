@@ -711,12 +711,16 @@ app-setting ul.languages li {
 }
 
 .cdk-global-overlay-wrapper {
-	background: green;
-	margin: 10%;
-	position: fixed;
+    margin: 10% auto;
+    position: fixed;
+    display: flex;
     top: 0;
-    width: 80%;
+	width: 100%;
 }
+.cdk-overlay-pane {
+	background: green;
+}
+
 .mat-button {
 	background: white;
     padding: 5px 20px;
