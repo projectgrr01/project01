@@ -4,7 +4,12 @@ import { Component, OnInit, Inject } from "@angular/core";
 @Component({
     selector: 'app-dialog',
     template: `
+    <div>
         <h2 mat-dialog-title>{{description}}</h2>
+        <div mat-dialog-actions>
+            <div class="mat-button" (click)="close()" cdkFocusInitial>OK</div>
+        </div>
+    </div>
     `
 })
 export class DialogComponent implements OnInit {

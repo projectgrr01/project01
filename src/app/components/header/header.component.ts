@@ -103,17 +103,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     
     public openDialog() {
 
-        return;
-        /*const dialogConfig = new MatDialogConfig();
+        const dialogConfig = new MatDialogConfig();
 
-        dialogConfig.disableClose = true;
+        dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
             id: 1,
-            description: 'Angular For Beginners'
+            description: 'Coming Soon!'
         };
 
-        this.dialog.open(DialogComponent, dialogConfig);*/
+        this.dialog.open(DialogComponent, dialogConfig);
     }
 
     public toggleSettings() {
