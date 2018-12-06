@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.categoryGroupsList = [];
             this.groupDataList = [];
             this.currentGroupChunkStartIndex = 0;
-            this.currentGroupChunkLength = 10;
+            this.currentGroupChunkLength = environment.sizeOfChunk;
             this.categoryGroupSearchDataList = [];
             if (this.group === '') {
                 this.getGroupsForCategory();
