@@ -12,8 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="dataScrolled()">
                 <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of dataList;let i = index;">
-                    <a class="img" routerLink="{{getEscapedUrl(data)}}" [style.background-image]="getSanitizedGifUrl(data)"
-                        [style.height]="getGifMinHeight(data)"></a>
+                    <a class="img" routerLink="{{getEscapedUrl(data)}}"><img [attr.src]="getSanitizedGifUrl(data)"></a>
                     <div class="inside">
                         <h3>{{getCategory(data)}} </h3>
                         <div class="description">{{getGroup(data)}} </div>
@@ -47,12 +46,13 @@ export class InfiniteComponent {
         return data.group_loc ? data.group_loc : data.group;
     }
     public getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.regular.url})`);
+        //return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.regular.url})`);
+        return data.media.gif.regular.url;
     }
     public getGifMinHeight(data: any) {
-        return `${data.media.gif.actual.height - 20}px`;
+        return `${data.media.gif.regular.height}px`;
     }
     public getGifMinHeightCover(data: any) {
-      return `${data.media.gif.actual.height + 40}px`;
+      return `${data.media.gif.regular.height}px`;
     }
 }

@@ -12,8 +12,8 @@
           infiniteScroll
           [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups()">
         <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of groupDataList;let i = index;">
-          <a class="img" [routerLink]="getGroupSearchLink(data)" [style.background-image]="getSanitizedGifUrl(data)"
-            [style.height]="getGifMinHeight(data)">
+          <a class="img" [routerLink]="getGroupSearchLink(data)">
+            <img [attr.src]="getSanitizedGifUrl(data)">
             <div class="desc">
               <span class="description">{{getGroup(data)}}</span>
             </div>

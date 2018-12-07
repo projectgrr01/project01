@@ -119,7 +119,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public getSanitizedGifUrl(data: any) {
-        return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
+        //return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
+        return data.media.gif.tiny.url;
     }
     public getGifMinHeight(data: any) {
         return `${data.media.gif.actual.height - 20}px`;

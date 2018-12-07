@@ -647,6 +647,7 @@ a.img {
 	background-size: cover;
 	background-position: center;
 	max-height: 300px;
+    overflow: hidden;
 }
 
 .img img {
