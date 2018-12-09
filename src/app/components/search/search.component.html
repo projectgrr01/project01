@@ -7,13 +7,14 @@
       <ng-masonry-grid *ngIf="groupDataList.length > 0"
           [masonryOptions]="{ transitionDuration: '0s', gutter: 10 }"
           [useAnimation]="false"
-          [useImagesLoaded]="false"
-          [scrollAnimationOptions]="{ animationEffect: 'effect-0', minDuration : 0, maxDuration : 0 }"
+          [useImagesLoaded]="true"
+
           infiniteScroll
-          [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups()">
-        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="cardx" *ngFor="let data of groupDataList;let i = index;">
+          [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups(false)">
+        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" [class.loaded]="imgDownloaded[i]" class="cardx" 
+          *ngFor="let data of groupDataList;let i = index;">
           <a class="img" [routerLink]="getGroupSearchLink(data)">
-            <img [attr.src]="getSanitizedGifUrl(data)">
+            <img [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
             <div class="desc">
               <span class="description">{{getGroup(data)}}</span>
             </div>

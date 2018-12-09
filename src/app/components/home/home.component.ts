@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   dataList: any[] = [];
   showLoader = true;
   currentPage = 0;
+  totalPages = Number.MAX_SAFE_INTEGER;
 
   constructor (private network: NetworkService,
               private sanitization: DomSanitizer) {
@@ -31,6 +32,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() { }
 
   public onLoadMoreData(): void {
+    if (this.showLoader || this.currentPage >= this.totalPages){
+      return;
+    }
     this.populateGridData();
   }
 
@@ -44,11 +48,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   public getSanitizedGifUrl(data: any) {
-    return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.regular.url})`)
+    return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.regular.url})`);
   }
+
   public getGifMinHeight(data: any) {
     return `${data.media.actual.height - 20}px`;
   }
+  
   public getGifMinHeightCover(data: any) {
     return `${data.media.actual.height + 40}px`;
   }

@@ -12,6 +12,7 @@ export class SearchTagResultComponent implements OnInit, OnDestroy {
     public tag: string;
     public tagSearchDataList: any;
     public pageNumber: number;
+    public totalPages: number = Number.MAX_SAFE_INTEGER;
     public showLoader = true;
     private routeSubscriber: any;
 
@@ -23,10 +24,11 @@ export class SearchTagResultComponent implements OnInit, OnDestroy {
         this.routeSubscriber = this.route.params.subscribe(params => {
             this.tag = params['tag'];
             this.pageNumber = 0;
+            this.totalPages = Number.MAX_SAFE_INTEGER;
             this.showLoader = true;
 
             this.tagSearchDataList = [];
-            this.getSearchDataFortag();
+            this.getSearchDataFortag(this.tag);
         });
     }
 
@@ -34,22 +36,30 @@ export class SearchTagResultComponent implements OnInit, OnDestroy {
         this.routeSubscriber.unsubscribe();
     }
 
-    private getSearchDataFortag() {
+    private getSearchDataFortag(_tagParam: string) {
         this.showLoader = true;
-        var _tag = this.tag;
+        var _tag =  _tagParam;
         if (_tag.indexOf(' ') > -1){
             _tag = this.tag.split(' ').join(',');
             _tag += ',' + this.tag;
         }
         this.netowrk.getTagsSearchData(_tag, this.pageNumber).subscribe(response => {
-            this.tagSearchDataList = this.tagSearchDataList.concat(response.content);
-            this.showLoader = false;
+            if (_tagParam == this.tag){
+                this.tagSearchDataList = this.tagSearchDataList.concat(response.content);
+                this.showLoader = false;
+                if (response.metadata){
+                    this.totalPages = response.metadata.totalPages;
+                }
+            }
         });
     }
 
     public onLoadMoreData() {
+        if (this.showLoader || (this.pageNumber >= this.totalPages-1)){
+            return;
+        }
         this.pageNumber++;
-        this.getSearchDataFortag();
+        this.getSearchDataFortag(this.tag);
     }
 
     public getGroupSearchLink(data: any) {

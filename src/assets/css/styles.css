@@ -650,8 +650,17 @@ a.img {
     overflow: hidden;
 }
 
+#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+	visibility: hidden;
+}
+#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx.loaded {
+	visibility: visible;
+}
+
 .img img {
 	width: 100%;
+}
+.img img.loaded {
 }
 
 .color-white{ color:#FFF !important; margin:10px 0;}
