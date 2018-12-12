@@ -47,6 +47,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.currentGroupChunkStartIndex = 0;
             this.currentGroupChunkLength = environment.sizeOfChunk;
             this.categoryGroupSearchDataList = [];
+            
+            console.log("ng on init" + this.group + " ", this.categoryGroupSearchDataList);
             if (this.group === '') {
                 this.getGroupsForCategory(this.category);
             } else {
@@ -63,7 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.showLoader = true;
         this.netowrk.getCategoryGroupsData(cat).subscribe(response => {
             //Check if data is not inserted for wrong search data
-            if (cat == this.category){
+            if (cat == this.category && response.groups){
                 this.categoryGroupsList = response.groups;
                 this.onScrollGroups(true);
             }
@@ -73,9 +75,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     private getSearchData(cat: string, grp: string) {
         this.showLoader = true;
         this.netowrk.getCategoryGroupsSearchData(cat, grp, this.pageNumber).subscribe(response => {
-            this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
-            this.showLoader = false;
             if (cat == this.category && grp == this.group){
+                this.showLoader = false;
+                this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
                 if (response.content.length > 0) {
                     this.display_category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
                     this.display_group = response.content[0].group_loc ? response.content[0].group_loc : this.group;
@@ -83,13 +85,20 @@ export class SearchComponent implements OnInit, OnDestroy {
                 if (response.metadata){
                     this.totalPages = response.metadata.totalPages;
                 }
+            } else {
+                this.categoryGroupSearchDataList = [];
             }
         });
     }
 
     private getCoverImageForGroupTile(category: string, groups: string[]) {
+        console.log(groups);
         let tempDataList = [];
         let totalReqCount = groups.length;
+        if (totalReqCount <= 0){
+            this.showLoader = false;
+            return;
+        }
         for (let group of groups) {
             this.netowrk.getCategoryGroupsCoverData(category, group[environment.defaultLanguage]).subscribe(response => {
                 if (category == this.category){
@@ -101,12 +110,18 @@ export class SearchComponent implements OnInit, OnDestroy {
                         this.groupDataList = this.groupDataList.concat(tempDataList);
                         this.showLoader = false;
                     }
+                    console.log(this.groupDataList);
                 }
             });
         }
     }
 
     private onScrollGroups(firstTime: boolean) {
+        console.log(this.currentGroupChunkStartIndex +">"+ this.currentGroupChunkLength);
+        if (this.currentGroupChunkStartIndex > this.currentGroupChunkLength){
+            this.showLoader = false;
+            return;
+        }
         if(this.showLoader && !firstTime){
             return;
         }
