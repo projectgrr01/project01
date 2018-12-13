@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Route, Router } from '@angular/router';
 import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UtilityService } from '../../commons/services/utility.service';
 import { environment } from '../../../environments/environment';
+import { filter } from 'rxjs/operators';
+import { Masonry, MasonryGridItem } from 'ng-masonry-grid';
 
 @Component({
     selector: 'app-search',
@@ -12,6 +13,10 @@ import { environment } from '../../../environments/environment';
 })
 
 export class SearchComponent implements OnInit, OnDestroy {
+
+    _masonry: Masonry;
+    masonryItems: any[]; // NgMasonryGrid Grid item list
+    private routeSubs: any = null;
 
     public showLoader = true;
     public category: string;
@@ -31,7 +36,15 @@ export class SearchComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private netowrk: NetworkService,
                 private sanitization: DomSanitizer,
-                private utility: UtilityService) { }
+                private router: Router) { 
+                    
+                    this.routeSubs = this.router.events.pipe(
+                        filter(event => event instanceof NavigationStart)
+                    )
+                    .subscribe((event:NavigationStart) => {
+                        this.removeAllItems();
+                    });
+                }
 
     ngOnInit() {
         this.routeSubscriber = this.route.params.subscribe(params => {
@@ -48,7 +61,6 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.currentGroupChunkLength = environment.sizeOfChunk;
             this.categoryGroupSearchDataList = [];
             
-            console.log("ng on init" + this.group + " ", this.categoryGroupSearchDataList);
             if (this.group === '') {
                 this.getGroupsForCategory(this.category);
             } else {
@@ -59,6 +71,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.routeSubscriber.unsubscribe();
+        if(this.routeSubs != null){
+            this.routeSubs.unsubscribe();
+        }
     }
 
     private getGroupsForCategory(cat: string) {
@@ -92,7 +107,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     private getCoverImageForGroupTile(category: string, groups: string[]) {
-        console.log(groups);
         let tempDataList = [];
         let totalReqCount = groups.length;
         if (totalReqCount <= 0){
@@ -110,15 +124,16 @@ export class SearchComponent implements OnInit, OnDestroy {
                         this.groupDataList = this.groupDataList.concat(tempDataList);
                         this.showLoader = false;
                     }
-                    console.log(this.groupDataList);
+                } else {
+                    tempDataList = [];
+                    return;
                 }
             });
         }
     }
 
     private onScrollGroups(firstTime: boolean) {
-        console.log(this.currentGroupChunkStartIndex +">"+ this.currentGroupChunkLength);
-        if (this.currentGroupChunkStartIndex > this.currentGroupChunkLength){
+        if (this.currentGroupChunkStartIndex > this.categoryGroupsList.length){
             this.showLoader = false;
             return;
         }
@@ -157,6 +172,19 @@ export class SearchComponent implements OnInit, OnDestroy {
         setTimeout(function(that){
             that.imgDownloaded[index] = true;
         }, 1000, this);
+    }
+
+    onNgMasonryInit($event: Masonry) {
+        this._masonry = $event;
+    }
+    removeAllItems() {
+        if (this._masonry) {
+            this._masonry.removeAllItems()
+                .subscribe( (items: MasonryGridItem) => {
+                    // remove all items from the list
+                    this.masonryItems = [];
+                });
+        }
     }
 
     public getSanitizedGifUrl(data: any) {

@@ -1,5 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Masonry, MasonryGridItem } from 'ng-masonry-grid'; // import necessary datatypes
+import { Router, NavigationStart } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
     selector: 'app-infinite-component',
@@ -8,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
                     [masonryOptions]= "{transitionDuration: '0s', gutter: 10, horizontalOrder: true }"
                     [useAnimation]= "false"
                     [useImagesLoaded]= "true"
+                    (onNgMasonryInit)="onNgMasonryInit($event)"
                     
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="20" 
@@ -30,13 +35,44 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class InfiniteComponent {
     @Input() dataList: Array<any> = [];
     @Output() loadMoreData: EventEmitter<boolean> = new EventEmitter();
+    
+    _masonry: Masonry;
+    masonryItems: any[]; // NgMasonryGrid Grid item list
+    private routeSubs: any = null;
 
     public imgDownloaded: Array<boolean> = [];
 
-    constructor(private sanitization: DomSanitizer) { }
+    constructor(private sanitization: DomSanitizer,
+                private router: Router) {
+                    this.routeSubs = this.router.events.pipe(
+                        filter (event => event instanceof NavigationStart)
+                    )
+                    .subscribe((event:NavigationStart) => {
+                        this.removeAllItems();
+                    });
+                }
+
+    public ngOnDestroy(){
+        if(this.routeSubs != null){
+            this.routeSubs.unsubscribe();
+        }
+    }
 
     public dataScrolled(): void {
         this.loadMoreData.emit(true);
+    }
+
+    onNgMasonryInit($event: Masonry) {
+        this._masonry = $event;
+    }
+    removeAllItems() {
+        if (this._masonry) {
+            this._masonry.removeAllItems()
+                .subscribe( (items: MasonryGridItem) => {
+                    // remove all items from the list
+                    this.masonryItems = [];
+                });
+        }
     }
 
     public getEscapedUrl(data: any) {

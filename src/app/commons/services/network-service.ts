@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Http, Response, RequestOptions, ResponseContentType } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import { Observable, Subject } from 'rxjs';
@@ -13,9 +13,10 @@ const subUrls: any = {
 }
 
 @Injectable()
-export class NetworkService {
+export class NetworkService implements OnDestroy {
     private shouldCancelNetworkCalls = false;
     protected ngUnsubscribe: Subject<void> = new Subject<void>();
+    private routeSubs: any = null;
 
     constructor (private http: Http,
                 private router: Router,
@@ -26,12 +27,17 @@ export class NetworkService {
                     .subscribe((event:NavigationStart) => {
                         if(this.shouldCancelNetworkCalls){
                             this.ngUnsubscribe.next();
-                            //this.ngUnsubscribe.complete();
                         }
                         //The flag for first time navigation started
                         this.shouldCancelNetworkCalls = true;
                     });
                 }
+
+    public ngOnDestroy(){
+        if(this.routeSubs != null){
+            this.routeSubs.unsubscribe();
+        }
+    }
 
     public getMenuCategories(): Observable<any> {
         return this.http.get(this.utility.baseApiUrl + subUrls.CATEGORYURL + '?lang=' + this.utility.language)
