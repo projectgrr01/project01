@@ -42,6 +42,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         filter(event => event instanceof NavigationStart)
                     )
                     .subscribe((event:NavigationStart) => {
+                        console.log("routing......... 2");
                         this.removeAllItems();
                     });
                 }
@@ -74,6 +75,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         if(this.routeSubs != null){
             this.routeSubs.unsubscribe();
         }
+        this.removeAllItems();
     }
 
     private getGroupsForCategory(cat: string) {
@@ -179,6 +181,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
     removeAllItems() {
         if (this._masonry) {
+            console.log("removing......... 2");
             this._masonry.removeAllItems()
                 .subscribe( (items: MasonryGridItem) => {
                     // remove all items from the list

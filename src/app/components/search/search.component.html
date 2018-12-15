@@ -4,10 +4,11 @@
   </div>
   <div id="content-scroller">
     <div>
-      <ng-masonry-grid *ngIf="groupDataList.length > 0"
+      <ng-masonry-grid id="search-component" *ngIf="groupDataList.length > 0"
           [masonryOptions]="{ transitionDuration: '0s', gutter: 10 }"
           [useAnimation]="false"
           [useImagesLoaded]="true"
+          (onNgMasonryInit)="onNgMasonryInit($event)"
 
           infiniteScroll
           [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups(false)">

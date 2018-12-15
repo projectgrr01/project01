@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Masonry, MasonryGridItem } from 'ng-masonry-grid'; // import necessary datatypes
 import { Router, NavigationStart } from '@angular/router';
@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
 @Component({
     selector: 'app-infinite-component',
     template: `
-            <ng-masonry-grid
+            <ng-masonry-grid id="infinite-component"
                     [masonryOptions]= "{transitionDuration: '0s', gutter: 10, horizontalOrder: true }"
                     [useAnimation]= "false"
                     [useImagesLoaded]= "true"
@@ -32,7 +32,7 @@ import { filter } from 'rxjs/operators';
         styleUrls: ['../../../../node_modules/ng-masonry-grid/ng-masonry-grid.css']
 })
 
-export class InfiniteComponent {
+export class InfiniteComponent implements OnDestroy {
     @Input() dataList: Array<any> = [];
     @Output() loadMoreData: EventEmitter<boolean> = new EventEmitter();
     
@@ -56,6 +56,7 @@ export class InfiniteComponent {
         if(this.routeSubs != null){
             this.routeSubs.unsubscribe();
         }
+        this.removeAllItems();
     }
 
     public dataScrolled(): void {
@@ -67,6 +68,7 @@ export class InfiniteComponent {
     }
     removeAllItems() {
         if (this._masonry) {
+            console.log("removing......... 1");
             this._masonry.removeAllItems()
                 .subscribe( (items: MasonryGridItem) => {
                     // remove all items from the list
