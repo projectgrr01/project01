@@ -13,12 +13,11 @@ declare var $: any;
                     [masonryOptions]= "{transitionDuration: '0s', gutter: 10, horizontalOrder: true }"
                     [useAnimation]= "false"
                     [useImagesLoaded]= "true"
-                    (onNgMasonryInit)="onNgMasonryInit($event)"
-                    
+
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="20" 
                     [immediateCheck]="true" (scrolled)="dataScrolled()">
-                <ng-masonry-grid-item id="{{'home-masonry-item-'+i}}" 
+                <ng-masonry-grid-item id="{{'home-masonry-item-'+i}}"
                     [class.loaded]="imgDownloaded[i]" class="cardx" *ngFor="let data of dataList;let i = index;">
                     <a class="img" *ngIf="dataBelogsToThisView(data)" routerLink="{{getEscapedUrl(data)}}">
                         <img [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
@@ -37,8 +36,6 @@ export class InfiniteComponent implements OnInit, OnDestroy {
     @Input() dataList: Array<any> = [];
     @Output() loadMoreData: EventEmitter<boolean> = new EventEmitter();
     
-    _masonry: Masonry;
-    masonryItems: any[]; // NgMasonryGrid Grid item list
     private routeSubs: any = null;
     private routeEndSubs: any = null;
 
@@ -56,6 +53,7 @@ export class InfiniteComponent implements OnInit, OnDestroy {
                     .subscribe((event:NavigationStart) => {
                         this.dataList = [];
                         this.imgDownloaded = [];
+                        $('.cardx').remove();
                         $('#home-infinite-component').html("");
                         $('#search-infinite-component').html("");
                         //this.removeAllItems();
@@ -64,7 +62,7 @@ export class InfiniteComponent implements OnInit, OnDestroy {
                         if (this.currentCategory != params['category']){
                             this.dataList = [];
                             this.imgDownloaded = [];
-                            this.removeAllItems();
+                            $('.cardx').remove();
                             $('#home-infinite-component').html("");
                             $('#search-infinite-component').html("");
                         }
@@ -72,7 +70,7 @@ export class InfiniteComponent implements OnInit, OnDestroy {
                     });
                 }
 
-    public ngOnInit(){        
+    public ngOnInit(){
         if (typeof($) !== 'undefined') {
             $('#infinite-component').html("");
         }
@@ -85,38 +83,26 @@ export class InfiniteComponent implements OnInit, OnDestroy {
         if(this.routeEndSubs != null){
             this.routeEndSubs.unsubscribe();
         }
-        this.removeAllItems();
     }
 
     public dataScrolled(): void {
         this.loadMoreData.emit(true);
     }
 
-    public onNgMasonryInit($event: Masonry) {
-        this._masonry = $event;
-        this.removeAllItems();
-    }
-    public removeAllItems() {
-        if (this._masonry) {
-            try {
-                this._masonry.removeAllItems()
-                .subscribe( (items: MasonryGridItem) => {
-                    // remove all items from the list
-                    this.masonryItems = [];
-                });
-            } catch (e){}
-        }
-    }
-
     public dataBelogsToThisView(data: any): boolean {
-        if (data.searchCategory){
+        var inList = (this.dataList.indexOf(data) > -1);
+        return inList;
+        /*if (data.searchCategory){
             if (data.searchCategory == this.currentCategory){
                 return true;
             }
-            console.log("fasdfasdf");
             return false;
         }
-        return true;
+        return true;*/
+    }
+
+    public inDataList(data){
+        return (this.dataList.indexOf(data) > -1);
     }
 
     public getEscapedUrl(data: any) {

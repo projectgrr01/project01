@@ -17,8 +17,6 @@ declare var $: any;
 
 export class SearchComponent implements OnInit, OnDestroy {
 
-    _masonry: Masonry;
-    masonryItems: any[]; // NgMasonryGrid Grid item list
     private routeSubs: any = null;
 
     public showLoader = true;
@@ -86,7 +84,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         if(this.routeSubs != null){
             this.routeSubs.unsubscribe();
         }
-        this.removeAllItems();
     }
 
     private getGroupsForCategory(cat: string) {
@@ -190,21 +187,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         setTimeout(function(that){
             that.imgDownloaded[index] = true;
         }, 1000, this);
-    }
-
-    onNgMasonryInit($event: Masonry) {
-        this._masonry = $event;
-    }
-    removeAllItems() {
-        if (this._masonry) {
-            try {
-                this._masonry.removeAllItems()
-                    .subscribe( (items: MasonryGridItem) => {
-                        // remove all items from the list
-                        this.masonryItems = [];
-                    });
-            } catch (e){}
-        }
     }
 
     public getSanitizedGifUrl(data: any) {
