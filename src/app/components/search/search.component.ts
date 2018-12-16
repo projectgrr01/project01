@@ -189,6 +189,13 @@ export class SearchComponent implements OnInit, OnDestroy {
         }, 1000, this);
     }
 
+    public getImageHeight(offsetWidth: number, data: any){
+        var width = data.media.gif.regular.width;
+        var height = data.media.gif.regular.height;
+        height = height * (offsetWidth/width)
+        return `${height}px`;
+    }
+
     public getSanitizedGifUrl(data: any) {
         //return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
         return data.media.gif.tiny.url;

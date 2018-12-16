@@ -5,22 +5,21 @@ import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular
 import { filter } from 'rxjs/operators';
 
 declare var $: any;
+declare var window: any;
 
 @Component({
     selector: 'app-infinite-component',
     template: `
             <ng-masonry-grid id="infinite-component"
-                    [masonryOptions]= "{transitionDuration: '0s', gutter: 10, horizontalOrder: true }"
-                    [useAnimation]= "false"
-                    [useImagesLoaded]= "true"
+                    (onNgMasonryInit)="onNgMasonryInit($event)"
 
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="20" 
                     [immediateCheck]="true" (scrolled)="dataScrolled()">
-                <ng-masonry-grid-item id="{{'home-masonry-item-'+i}}"
+                <ng-masonry-grid-item #masonryItem id="{{'home-masonry-item-'+i}}"
                     [class.loaded]="imgDownloaded[i]" class="cardx" *ngFor="let data of dataList;let i = index;">
                     <a class="img" *ngIf="dataBelogsToThisView(data)" routerLink="{{getEscapedUrl(data)}}">
-                        <img [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
+                        <img [attr.height]="getImageHeight(masonryItem.offsetWidth, data)" [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
                     </a>
                     <div class="inside">
                         <h3>{{getCategory(data)}} </h3>
@@ -36,14 +35,14 @@ export class InfiniteComponent implements OnInit, OnDestroy {
     @Input() dataList: Array<any> = [];
     @Output() loadMoreData: EventEmitter<boolean> = new EventEmitter();
     
+    private _masonry: Masonry;
     private routeSubs: any = null;
     private routeEndSubs: any = null;
 
     public currentCategory = '';
     public imgDownloaded: Array<boolean> = [];
 
-    constructor(private sanitization: DomSanitizer,
-                private router: Router,
+    constructor(private router: Router,
                 private route: ActivatedRoute) {
                     this.dataList = [];
                     this.imgDownloaded = [];
@@ -84,25 +83,35 @@ export class InfiniteComponent implements OnInit, OnDestroy {
             this.routeEndSubs.unsubscribe();
         }
     }
+    
+    public onNgMasonryInit($event: Masonry) {
+        this._masonry = $event;
+    }
 
     public dataScrolled(): void {
         this.loadMoreData.emit(true);
     }
 
     public dataBelogsToThisView(data: any): boolean {
+        window.datalist = this.dataList;
+        window.imgDownloaded = this.imgDownloaded;
         var inList = (this.dataList.indexOf(data) > -1);
         return inList;
-        /*if (data.searchCategory){
-            if (data.searchCategory == this.currentCategory){
-                return true;
-            }
-            return false;
-        }
-        return true;*/
     }
 
-    public inDataList(data){
-        return (this.dataList.indexOf(data) > -1);
+    public reorderItems() {
+        console.log('reorderItems 1');
+        if (this._masonry) {
+            console.log('reorderItems 2');
+            this._masonry.reOrderItems();
+        }
+    }
+
+    public getImageHeight(offsetWidth: number, data: any){
+        var width = data.media.gif.regular.width;
+        var height = data.media.gif.regular.height;
+        height = height * (offsetWidth/width)
+        return `${height}px`;
     }
 
     public getEscapedUrl(data: any) {
@@ -116,7 +125,7 @@ export class InfiniteComponent implements OnInit, OnDestroy {
     public showThisImg(index: number) {
         setTimeout(function(that){
             that.imgDownloaded[index] = true;
-        }, 1000, this);
+        }, 200, this);
     }
     
     public getCategory(data: any): string {

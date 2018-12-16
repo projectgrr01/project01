@@ -25,11 +25,11 @@ import { Properties } from '../properties.utils'
 })
 export class ShareButtonComponent implements OnInit{
   @Input() platformName;
-  platform:Platform;
   @Input() textEnabled: boolean;
   @Input() addedText:string;
   @Input() direction:string = 'horizontal';
   @Input() properties:Properties;
+  platform:Platform;
   url:string;
 
   constructor(@Inject(WINDOW) private window: Window, ){
