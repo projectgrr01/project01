@@ -93,9 +93,10 @@ export class NetworkService implements OnDestroy {
     }
 
     private getCategoryGroupSearchData(category: string, group: string, pageNumber: number, size: number): Observable<any> {
+        
         let options = '?category=' + category + '&group=' + group + '&page=' + pageNumber.toString() + '&size=' + size.toString()
                         + '&lang=' + this.utility.language;
-        return this.http.get(this.utility.baseApiUrl + subUrls.SEARCH + options)
+        return this.http.get(this.utility.baseApiUrl + this.utility.accountPath + subUrls.SEARCH + options)
             .pipe(takeUntil(this.ngUnsubscribe))
             .pipe(map(data => data.json()));
     }

@@ -12,7 +12,7 @@
 
           infiniteScroll
           [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups(false)">
-        <ng-masonry-grid-item id="{{'masonry-item-'+i}}" [class.loaded]="imgDownloaded[i]" class="cardx" 
+        <ng-masonry-grid-item id="{{'search-masonry-item-'+i}}" [class.loaded]="imgDownloaded[i]" class="cardx" 
           *ngFor="let data of groupDataList;let i = index;">
           <a class="img" [routerLink]="getGroupSearchLink(data)">
             <img [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
@@ -23,7 +23,7 @@
         </ng-masonry-grid-item>
       </ng-masonry-grid>
 
-      <app-infinite-component *ngIf="showGroupData" [dataList]="categoryGroupSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
+      <app-infinite-component id="search-infinite-component" *ngIf="showGroupData" [dataList]="categoryGroupSearchDataList" (loadMoreData)="onLoadMoreData()"></app-infinite-component>
 
       <!--loading-->
       <div class="loading loading-more-indicator" *ngIf="showLoader">

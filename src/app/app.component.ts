@@ -1,5 +1,5 @@
 import { WINDOW } from '@ng-toolkit/universal';
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject} from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject, ChangeDetectionStrategy} from '@angular/core';
 import { NetworkService } from './commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -13,6 +13,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-root',
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css', '../assets/css/styles.css']
 })

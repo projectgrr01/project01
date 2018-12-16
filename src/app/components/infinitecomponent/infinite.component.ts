@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Masonry, MasonryGridItem } from 'ng-masonry-grid'; // import necessary datatypes
-import { Router, NavigationStart } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
+declare var $: any;
 
 @Component({
     selector: 'app-infinite-component',
@@ -17,9 +18,9 @@ import { filter } from 'rxjs/operators';
                     infiniteScroll
                     [infiniteScrollDistance]="1" [infiniteScrollThrottle]="20" 
                     [immediateCheck]="true" (scrolled)="dataScrolled()">
-                <ng-masonry-grid-item id="{{'masonry-item-'+i}}" 
+                <ng-masonry-grid-item id="{{'home-masonry-item-'+i}}" 
                     [class.loaded]="imgDownloaded[i]" class="cardx" *ngFor="let data of dataList;let i = index;">
-                    <a class="img" routerLink="{{getEscapedUrl(data)}}">
+                    <a class="img" *ngIf="dataBelogsToThisView(data)" routerLink="{{getEscapedUrl(data)}}">
                         <img [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">
                     </a>
                     <div class="inside">
@@ -32,29 +33,57 @@ import { filter } from 'rxjs/operators';
         styleUrls: ['../../../../node_modules/ng-masonry-grid/ng-masonry-grid.css']
 })
 
-export class InfiniteComponent implements OnDestroy {
+export class InfiniteComponent implements OnInit, OnDestroy {
     @Input() dataList: Array<any> = [];
     @Output() loadMoreData: EventEmitter<boolean> = new EventEmitter();
     
     _masonry: Masonry;
     masonryItems: any[]; // NgMasonryGrid Grid item list
     private routeSubs: any = null;
+    private routeEndSubs: any = null;
 
+    public currentCategory = '';
     public imgDownloaded: Array<boolean> = [];
 
     constructor(private sanitization: DomSanitizer,
-                private router: Router) {
+                private router: Router,
+                private route: ActivatedRoute) {
+                    this.dataList = [];
+                    this.imgDownloaded = [];
                     this.routeSubs = this.router.events.pipe(
                         filter (event => event instanceof NavigationStart)
                     )
                     .subscribe((event:NavigationStart) => {
-                        this.removeAllItems();
+                        this.dataList = [];
+                        this.imgDownloaded = [];
+                        $('#home-infinite-component').html("");
+                        $('#search-infinite-component').html("");
+                        //this.removeAllItems();
+                    });
+                    this.routeEndSubs = this.route.params.subscribe(params => {
+                        if (this.currentCategory != params['category']){
+                            this.dataList = [];
+                            this.imgDownloaded = [];
+                            this.removeAllItems();
+                            $('#home-infinite-component').html("");
+                            $('#search-infinite-component').html("");
+                        }
+                        this.currentCategory = params['category'];
                     });
                 }
+
+    public ngOnInit(){        
+        if (typeof($) !== 'undefined') {
+            $('#infinite-component').html("");
+        }
+    }
 
     public ngOnDestroy(){
         if(this.routeSubs != null){
             this.routeSubs.unsubscribe();
+        }
+        if(this.routeEndSubs != null){
+            this.routeEndSubs.unsubscribe();
         }
         this.removeAllItems();
     }
@@ -63,18 +92,31 @@ export class InfiniteComponent implements OnDestroy {
         this.loadMoreData.emit(true);
     }
 
-    onNgMasonryInit($event: Masonry) {
+    public onNgMasonryInit($event: Masonry) {
         this._masonry = $event;
+        this.removeAllItems();
     }
-    removeAllItems() {
+    public removeAllItems() {
         if (this._masonry) {
-            console.log("removing......... 1");
-            this._masonry.removeAllItems()
+            try {
+                this._masonry.removeAllItems()
                 .subscribe( (items: MasonryGridItem) => {
                     // remove all items from the list
                     this.masonryItems = [];
                 });
+            } catch (e){}
         }
+    }
+
+    public dataBelogsToThisView(data: any): boolean {
+        if (data.searchCategory){
+            if (data.searchCategory == this.currentCategory){
+                return true;
+            }
+            console.log("fasdfasdf");
+            return false;
+        }
+        return true;
     }
 
     public getEscapedUrl(data: any) {

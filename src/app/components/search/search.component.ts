@@ -5,6 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { filter } from 'rxjs/operators';
 import { Masonry, MasonryGridItem } from 'ng-masonry-grid';
+import { UtilityService } from '../../commons/services/utility.service';
+
+declare var $: any;
 
 @Component({
     selector: 'app-search',
@@ -35,20 +38,24 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private netowrk: NetworkService,
-                private sanitization: DomSanitizer,
+                private utility: UtilityService,
                 private router: Router) { 
                     
                     this.routeSubs = this.router.events.pipe(
                         filter(event => event instanceof NavigationStart)
                     )
                     .subscribe((event:NavigationStart) => {
-                        console.log("routing......... 2");
-                        this.removeAllItems();
+                        this.groupDataList = [];
+                        this.categoryGroupsList = [];
+                        this.imgDownloaded = [];
+                        //this.removeAllItems();
                     });
                 }
 
     ngOnInit() {
         this.routeSubscriber = this.route.params.subscribe(params => {
+            this.utility.account = this.route.snapshot.queryParamMap.get('u');
+
             this.category = params['category'];
             this.group = params['group'] || '';
             this.display_category = this.group;
@@ -62,10 +69,14 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.currentGroupChunkLength = environment.sizeOfChunk;
             this.categoryGroupSearchDataList = [];
             
-            if (this.group === '') {
-                this.getGroupsForCategory(this.category);
+            if (this.utility.account == "public"){
+                if (this.group === '') {
+                    this.getGroupsForCategory(this.category);
+                } else {
+                    this.getSearchData(this.category, this.group);
+                }
             } else {
-                this.getSearchData(this.category, this.group);
+                this.getSearchData(this.category, "");
             }
         });
     }
@@ -94,6 +105,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.netowrk.getCategoryGroupsSearchData(cat, grp, this.pageNumber).subscribe(response => {
             if (cat == this.category && grp == this.group){
                 this.showLoader = false;
+                for (var i=0; i<response.content.length; i++){
+                    //added to recognize if result is from search page
+                    response.content[i].searchCategory = cat;
+                }
                 this.categoryGroupSearchDataList = this.categoryGroupSearchDataList.concat(response.content);
                 if (response.content.length > 0) {
                     this.display_category = response.content[0].category_loc ? response.content[0].category_loc : this.category;
@@ -103,7 +118,8 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.totalPages = response.metadata.totalPages;
                 }
             } else {
-                this.categoryGroupSearchDataList = [];
+                //commented because it can cause issue and remove relevant data
+                //this.categoryGroupSearchDataList = [];
             }
         });
     }
@@ -150,7 +166,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     get showGroupData(): boolean {
-        return this.group !== '';
+        return (this.group !== '' || this.categoryGroupSearchDataList.length > 0);
     }
 
     public onLoadMoreData() {
@@ -181,12 +197,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
     removeAllItems() {
         if (this._masonry) {
-            console.log("removing......... 2");
-            this._masonry.removeAllItems()
-                .subscribe( (items: MasonryGridItem) => {
-                    // remove all items from the list
-                    this.masonryItems = [];
-                });
+            try {
+                this._masonry.removeAllItems()
+                    .subscribe( (items: MasonryGridItem) => {
+                        // remove all items from the list
+                        this.masonryItems = [];
+                    });
+            } catch (e){}
         }
     }
 
