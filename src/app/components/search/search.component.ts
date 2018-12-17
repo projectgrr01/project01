@@ -52,6 +52,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routeSubscriber = this.route.params.subscribe(params => {
+            //Harcoded for three images stripe in homapge
             this.utility.account = this.route.snapshot.queryParamMap.get('u');
 
             this.category = params['category'];
@@ -74,6 +75,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.getSearchData(this.category, this.group);
                 }
             } else {
+                //Harcoded for three images stripe in homapge
                 this.getSearchData(this.category, "");
             }
         });
@@ -175,6 +177,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.getSearchData(this.category, this.group);
     }
 
+    public showImageTile(index: number){
+        return this.imgDownloaded[index] || index < this.utility.imagesChunkSize;
+    }
+
     public getGroupSearchLink(data: any) {
         return '/search/' + data.category + '/' + data.group;
     }
@@ -197,7 +203,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     public getSanitizedGifUrl(data: any) {
-        //return this.sanitization.bypassSecurityTrustStyle(`url(${data.media.gif.tiny.url})`);
         return data.media.gif.tiny.url;
     }
     public getGifMinHeight(data: any) {

@@ -25,7 +25,6 @@ export class SettingComponent {
     @Output() languageSelected: EventEmitter<string> = new EventEmitter();
 
     public selectLanguage(language: string) {
-        console.log(language);
         this.languageSelected.emit(language);
     }
 

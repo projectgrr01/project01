@@ -5,10 +5,11 @@
   <div id="content-scroller">
     <div>
       <ng-masonry-grid id="search-component" *ngIf="groupDataList.length > 0"
+          [useAnimation]="false"
 
           infiniteScroll
           [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScrollGroups(false)">
-        <ng-masonry-grid-item #masonryItem id="{{'search-masonry-item-'+i}}" [class.loaded]="imgDownloaded[i]" class="cardx" 
+        <ng-masonry-grid-item #masonryItem id="{{'search-masonry-item-'+i}}" [class.loaded]="showImageTile(i)" class="cardx loaded" 
           *ngFor="let data of groupDataList;let i = index;">
           <a class="img" [routerLink]="getGroupSearchLink(data)">
             <img [attr.height]="getImageHeight(masonryItem.offsetWidth, data)" [attr.src]="getSanitizedGifUrl(data)" (load)="showThisImg(i)">

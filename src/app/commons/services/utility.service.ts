@@ -6,12 +6,14 @@ export class UtilityService {
     private _baseApiUrl: string;
     private currentLanguage: string;
     private currentAccount: string = "public";
+    private _imagesChunkSize: number = 0;
 
     constructor () {
     	try{
             this._baseApiUrl = environment.apiUrl;
             this.currentAccount = "public";
             this.currentLanguage = localStorage['lang'] ? localStorage['lang'] : environment.defaultLanguage;
+            this._imagesChunkSize = environment.sizeOfChunk;
 	    } catch(e){}
     }
 
@@ -41,5 +43,9 @@ export class UtilityService {
 
     set language(lang: string) {
         this.currentLanguage = lang;
+    }
+
+    get imagesChunkSize(): number {
+        return this._imagesChunkSize;
     }
 }

@@ -72,7 +72,7 @@ export class NetworkService implements OnDestroy {
     }
 
     public getGifDataByUid(gifId: string): Observable<any> {
-        return this.http.get(this.utility.baseApiUrl + gifId + '?lang=' + this.utility.language)
+        return this.http.get(this.utility.baseApiUrl + this.utility.accountPath + gifId + '?lang=' + this.utility.language)
             .pipe(takeUntil(this.ngUnsubscribe))
             .pipe(map(data => data.json()));
     }

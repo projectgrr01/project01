@@ -3,6 +3,7 @@ import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { UtilityService } from '../../commons/services/utility.service';
 
 @Component({
   selector: 'app-gif-viewer',
@@ -24,12 +25,15 @@ export class GifviewerComponent implements OnInit, OnDestroy {
 
     constructor (private route: ActivatedRoute,
                 private network: NetworkService,
-                private sanitization: DomSanitizer) {}
+                private sanitization: DomSanitizer,
+                private utility: UtilityService) {}
 
     ngOnInit(): void {
         this.routeSubscriber = this.route.params.subscribe(params => {
             this.imageData = {category: '', group: ''};
             this.imageUid = unescape(params['gifid']);
+            this.utility.account = this.route.snapshot.queryParamMap.get('u');
+
             this.getGifData();
         });
     }
