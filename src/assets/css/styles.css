@@ -695,6 +695,16 @@ a.img {
 #content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx.loaded {
 	visibility: visible;
 }
+@media screen and (max-width: 800px) {
+	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		margin: 1%;
+	}
+}
+@media screen and (max-width: 400px) {
+	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
+		margin: 0;
+	}
+}
 
 .img img {
 	width: 100%;
