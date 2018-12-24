@@ -1,7 +1,9 @@
 import { WINDOW } from '@ng-toolkit/universal';
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject} from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Sanitizer , Inject, OnDestroy} from '@angular/core';
 import { NetworkService } from '../../commons/services/network-service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UtilityService } from '../../commons/services/utility.service';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -11,22 +13,34 @@ declare var $: any;
   styleUrls: []
 })
 
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Convert these anonymous arrays into class arrays
   dataList: any[] = [];
   showLoader = true;
   currentPage = 0;
   totalPages = Number.MAX_SAFE_INTEGER;
+  public routeSubscriber: any;
 
   constructor (private network: NetworkService,
-              private sanitization: DomSanitizer) {
+              private sanitization: DomSanitizer,
+              private route: ActivatedRoute,
+              private utility: UtilityService) {
   }
 
   ngOnInit(): void {
-    this.currentPage = 0;
-    this.dataList = [];
-    this.populateGridData();
+    this.routeSubscriber = this.route.params.subscribe(params => {
+        this.utility.account = this.route.snapshot.queryParamMap.get('u');
+        
+        this.currentPage = 0;
+        this.dataList = [];
+        this.populateGridData();
+
+    });
+  }
+
+  ngOnDestroy() {
+      this.routeSubscriber.unsubscribe();
   }
 
   ngAfterViewInit() { }

@@ -61,7 +61,8 @@ export class GifviewerComponent implements OnInit, OnDestroy {
             this.imageData = response;
             this.dataList = [];
             this.currentPage = 0;
-            this.populateGridData();
+            if (this.currentPage == 0)
+                this.populateGridData();
         }) ;
     }
 
