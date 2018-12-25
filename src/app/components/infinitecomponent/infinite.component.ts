@@ -55,18 +55,21 @@ export class InfiniteComponent implements OnInit, OnDestroy {
                     .subscribe((event:NavigationStart) => {
                         this.dataList = [];
                         this.imgDownloaded = [];
-                        $('.cardx').remove();
-                        $('#home-infinite-component').html("");
-                        $('#search-infinite-component').html("");
-                        //this.removeAllItems();
+                        if (typeof($) !== 'undefined') {
+                            $('.cardx').remove();
+                            $('#home-infinite-component').html("");
+                            $('#search-infinite-component').html("");
+                        }
                     });
                     this.routeEndSubs = this.route.params.subscribe(params => {
                         if (this.currentCategory != params['category']){
                             this.dataList = [];
                             this.imgDownloaded = [];
-                            $('.cardx').remove();
-                            $('#home-infinite-component').html("");
-                            $('#search-infinite-component').html("");
+                            if (typeof($) !== 'undefined') {
+                                $('.cardx').remove();
+                                $('#home-infinite-component').html("");
+                                $('#search-infinite-component').html("");
+                            }
                         }
                         this.currentCategory = params['category'];
                     });
