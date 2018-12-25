@@ -327,7 +327,7 @@ width: 150px;
 }
 .imageArea {
 	/*min-height:250px;*/
-	max-height:600px;
+	/*max-height:600px;*/
 	height:100%;
 	text-align: center;
 	width: fit-content;
@@ -702,7 +702,7 @@ a.img {
 }
 @media screen and (max-width: 400px) {
 	#content-scroller ng-masonry-grid.grid ng-masonry-grid-item.cardx {
-		margin: 0;
+		margin: 1% 0;
 	}
 }
 
