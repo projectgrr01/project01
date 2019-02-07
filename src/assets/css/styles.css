@@ -78,6 +78,11 @@ body {
 	width: 30%;
 	max-width: 100px;
 }
+.logo.invitekaro {
+	position: absolute;
+    left: 50%;
+    margin-left: -36px;
+}
 .logo.right div {
 	cursor: pointer;
 }
