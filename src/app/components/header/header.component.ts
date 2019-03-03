@@ -12,7 +12,7 @@ declare var $: any;
     template: `<div class="header">
             <div class="container">
                 <div class="logo"> <a [routerLink]="['/']"><img src="/assets/images/gifkarologo.png" /> </a> </div>
-                <div class="logo invitekaro"> <a href="//invitekaro.gifkaro.com/index.html" target="_blank"><img src="/assets/images/invitekaro_small.gif" /> </a> </div>
+                <div class="logo invitekaro"> <a href="//invitekaro.gifkaro.com" target="_blank"><img src="/assets/images/invitekaro_small.gif" /> </a> </div>
                 <div class="logo right">
                     <div (click)="openDialog()"><img src="/assets/images/plus_128x128.png"></div>
                     <div (click)="openDialog()"><img src="/assets/images/contact_128x128.png"></div>
